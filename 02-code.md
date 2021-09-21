@@ -34,6 +34,45 @@
 Утилиты:
 
 
+## Языки программирования
+
+Программирование - процесс создания человеком текста, понятного ему и другим людям
+из которого можно машинным способом создать код для машины или файл для
+перепрограммируемых вентлильных матриц (FPGA).
+
+Список знакомых актуальных языков программирования по алфавиту:
+
+* Bash, Shell
+* C
+* C# (‘c#’, ‘cs’)
+* C++ (‘c++’, ‘cpp’, ‘cxx’, ‘cc’)
+* Clipper, DBase, FoxPro...
+* Clojure
+* CMake
+* CSS
+* D
+* Diff (‘patch’, ‘diff’)
+* Erlang
+* F# (‘f#’, ‘fs’)
+* Fortran
+* Go
+* Haskell
+* HTML, XML
+* Java
+* JavaScript (‘js’, ‘javascript’)
+* Lisp, Scheme
+* Lua
+* Objective C (‘objc’, ‘objectivec’)
+* Pascal, Delphi
+* Perl
+* PHP
+* Python
+* Ruby
+* Rust
+* Scala
+* SQL
+* TeX
+* Vala
 
 
 ## Источники

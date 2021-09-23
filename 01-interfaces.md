@@ -243,12 +243,14 @@ API Win32 практически не отделима от графическо
 * wxWidgets - библиотека C++ с использованием классических макросов Си. Имеет ряд привязок
 * tk - библиотека придуманная в языке TCL, но ставшая базовой комплектной даже для Python3.
 * gtk - чисто Сишная библиотека используется, как базовая для остальных
-* Enlightenment Foundation Libraries (EFL) - 
+* Enlightenment Foundation Libraries (EFL) - изящно-артистичная и лёгкая одновременно библиотека с разными анимационными и звуковыми эффектами
 * SFML - популярная современная библиотека в индустрии разработки игр
 * JUCE - C++ библиотека
 * старые библиотеки для игр и мультимедия:
 	- SDL 
 	- Allegro
+* FOX-tools - библиотека GUI с использование OpenGL и инфографики
+* XForms - переносимая библиотека в стиле X-Window расширений
 
 На других языках программирования реализован свой GUI.
 Например Java использует универсальное API для создания форм.
@@ -343,6 +345,7 @@ Unix систем: Linux и BSD. Но как правило, последняя 
 
 * [Азбука Морзе](https://ru.wikipedia.org/wiki/Азбука_Морзе)
 * [GPIO](https://ru.wikipedia.org/wiki/GPIO)
+* [Работа с СОМ-портом на Си в linux](https://habr.com/ru/company/ruvds/blog/578432/) ; author: dlinyj ; 17 сентября в 12:00
 * [CLI](://ru.wikipedia.org/wiki/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%BD%D0%BE%D0%B9_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8)
 * [TUI](https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F)
 * [ed](https://ru.wikipedia.org/wiki/Ed)
@@ -377,4 +380,3 @@ Unix систем: Linux и BSD. Но как правило, последняя 
 * [Человеко-компьютерное взаимодействие](https://ru.wikipedia.org/wiki/%D0%A7%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%BE-%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D0%BD%D0%BE%D0%B5_%D0%B2%D0%B7%D0%B0%D0%B8%D0%BC%D0%BE%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B5)
 * [Проектирование взаимодействия](https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B7%D0%B0%D0%B8%D0%BC%D0%BE%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D1%8F)
 * "SPI Programming Manual" ; Part Number: 427506-007; Published: February 201
-

@@ -20,6 +20,23 @@
 	- компоновка исполнимых модулей с библиотеками и объектными файлами
 		+ Ассемблеры синтаксисов Intel и AT&T (UNIX): NASM (FASM) и GAS
 		+ GNU BinUtils
+* [Средства сборки программ](03-tools.md)
+	- make
+	- CMake
+	- GNU Autotools
+	- Интерактивная разработка:
+		+ ещё раз, но детальней: редакторы vim, emacs, командная оболочка Борна (bash, tcsh, zsh)
+		+ Легковесы: Geany, Codelite, Code::Blocks
+		+ QtCreator
+		+ Среда в комплекте Python: IDLE . Дополнительная среда: Eric
+		+ R: RStudio
+		+ От Oracle к Apache: NetBeans
+		+ Выходец из IBM: Eclipse
+		+ Продукция JetBrains: IntelliJ IDEA, PyCharm
+		+ Прочие полукоммерсанты: Sublime Text, Brackets
+		+ Неизменный XCode от Apple
+		+ MS Visual Studio: Community edition - переносимая среда на Electron.JS
+		+ Notepad++ для любителей Windows
 * Безопасность
 	- Роль криптографии в надёжном управлении
 		+ gnupg

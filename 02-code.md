@@ -40,7 +40,93 @@
 * **as** - GNU Assembler (синтаксис AT&T)
 * **ar** - архиватор объектных файлов в статические библиотеки (используется довольно редко). Также на его базе строят пакеты ОС (rpm, deb файлы).
 * **objdump** - подробно показывает поля объектных (и исполнимых) файлов.
+* **readelf** - даёт представление о содержимом исполнимого файла (формат .ELF).
 
+Пример просмотра полей заголовка исполняемого файла `str1`:
+
+```c
+readelf --syms str1
+
+Symbol table '.dynsym' contains 8 entries:
+   Чис:    Знач           Разм Тип     Связ   Vis      Индекс имени
+     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+     1: 0000000000000000     0 NOTYPE  WEAK   DEFAULT  UND _ITM_deregisterTMCloneTab
+     2: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND puts@GLIBC_2.2.5 (2)
+
+...
+
+objdump --syms str1
+
+str1:     формат файла elf64-x86-64
+
+SYMBOL TABLE:
+0000000000000238 l    d  .interp	0000000000000000              .interp
+0000000000000254 l    d  .note.ABI-tag	0000000000000000              .note.ABI-tag
+0000000000000274 l    d  .note.gnu.build-id	0000000000000000              .note.gnu.build-id
+0000000000000298 l    d  .gnu.hash	0000000000000000              .gnu.hash
+00000000000002b8 l    d  .dynsym	0000000000000000              .dynsym
+0000000000000378 l    d  .dynstr	0000000000000000              .dynstr
+
+...
+
+```
+
+Важным среди прочих полей - является точка входа с меткой main.
+
+При сборке программы с отладочной информацией получаем такой результат:
+
+```
+
+objdump -d str1
+
+str1:     формат файла elf64-x86-64
+
+
+Дизассемблирование раздела .init:
+
+0000000000000528 <_init>:
+ 528:	48 83 ec 08          	sub    $0x8,%rsp
+ 52c:	48 8b 05 b5 0a 20 00 	mov    0x200ab5(%rip),%rax        # 200fe8 <__gmon_start__>
+ 533:	48 85 c0             	test   %rax,%rax
+ 536:	74 02                	je     53a <_init+0x12>
+ 538:	ff d0                	callq  *%rax
+ 53a:	48 83 c4 08          	add    $0x8,%rsp
+ 53e:	c3                   	retq
+
+...
+
+```
+
+Т.е. это ни что иное как код ассемблера (синтаксис AT&T) с комментариями.
+
+Код делится на сегменты, данные, исполнимая часть ...
+
+```
+readelf --segments str1
+
+Тип файла ELF — DYN (Совм. исп. объектный файл)
+Entry point 0x580
+There are 9 program headers, starting at offset 64
+
+Заголовки программы:
+  Тип            Смещ.              Вирт.адр           Физ.адр
+                 Рзм.фйл            Рзм.пм              Флаги  Выравн
+  PHDR           0x0000000000000040 0x0000000000000040 0x0000000000000040
+                 0x00000000000001f8 0x00000000000001f8  R      0x8
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x000000000000001c 0x000000000000001c  R      0x1
+      [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]
+  LOAD           0x0000000000000000 0x0000000000000000 0x0000000000000000
+                 0x00000000000008c0 0x00000000000008c0  R E    0x200000
+  LOAD           0x0000000000000db0 0x0000000000200db0 0x0000000000200db0
+                 0x0000000000000260 0x0000000000000268  RW     0x200000
+  DYNAMIC        0x0000000000000dc0 0x0000000000200dc0 0x0000000000200dc0
+                 0x00000000000001f0 0x00000000000001f0  RW     0x8
+  NOTE           0x0000000000000254 0x0000000000000254 0x0000000000000254
+
+...
+
+```
 
 
 
@@ -97,6 +183,10 @@
 * [Executable and Linkable Format](https://ru.wikipedia.org/wiki/Executable_and_Linkable_Format)
 * [Portable Executable](https://ru.wikipedia.org/wiki/Portable_Executable)
 * [GNU Binutils](https://en.wikipedia.org/wiki/GNU_Binutils)
+
+## Видео
+
+* [How to Inspect Compiled Binaries (binutils, objdump)](https://youtu.be/bWMIpHVRFUo)
 
 
 

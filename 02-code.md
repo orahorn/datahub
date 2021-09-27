@@ -228,9 +228,13 @@ There are 9 program headers, starting at offset 64
 
 ### Первые переносимые языки прикладного программирования
 
-* 1954 - Fortran - математические научные вычисления
+* 1954 - [Fortran](https://ru.wikipedia.org/wiki/Фортран) - математические научные вычисления. **Долгожитель**:
+	- [GNU Fortran Compiler](https://gcc.gnu.org/fortran/) - в основном комплекте сборного компилятора GNU
+	- [Nvidia HPC Fortran Compiler](https://developer.nvidia.com/hpc-compilers) - массивные параллельные вычисления
+	- [Intel® Fortran Compiler](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/fortran-compiler.html) - ПО от флагмана процессорного рынка
+	- Последний стандарт датируется 2018 годом
 * 1958 - Algol - универсальный ЯП при разработке Джона Бекуса
-* 1959 - Cobol - 
+* 1959 - Cobol - малопопулярный язык банковских транзакций. Доступен в виде [GnuCobol](https://gnucobol.sourceforge.io/) - но как сторонний проект. Ранее: open-cobol .
 * 1970 - Pascal - придумал Никлаус Вирт. Есть современная реализация Free Pascal Compiler со следующими возможностями:
 	- TUI среда fp-ide совместимая с Turbo Pascal, Borland Pascal имеет встроенный компилятор
 	- fpc - сама утилита компиляции, совместимая с аналогами ранее названых сред и Object Pascal, Delphi
@@ -240,7 +244,7 @@ There are 9 program headers, starting at offset 64
 	- gcc - идёт с комплектом GNU Collection Compiler, как основной
 	- clang - на базе LLVM
 	- tcc - позволяет интерпретацию Си
-	- sdcc - для кода микроконтроллеров
+	- [sdcc](https://ru.wikipedia.org/wiki/Small_Device_C_Compiler) - для кода микроконтроллеров
 * 1972 - Prolog - язык декларативного программирования
 * 1977 - Borne Shell - классическая оболочка UNIX
 * 1983 - C++ - надмножество C

@@ -235,8 +235,9 @@ There are 9 program headers, starting at offset 64
 	- Последний стандарт датируется 2018 годом
 * 1958 - Algol - универсальный ЯП при разработке Джона Бекуса
 * 1959 - Cobol - малопопулярный язык банковских транзакций. Доступен в виде [GnuCobol](https://gnucobol.sourceforge.io/) - но как сторонний проект. Ранее: open-cobol .
+* 1964 - Basic ( Beginner’s All-purpose Symbolic Instruction Code) - язык общего назначения для начинающих непрограммистов. Стоял в школах и на домашних компьютерах (в ПЗУ). Современные варианты: VB и [Basiс-256](https://ru.wikipedia.org/wiki/BASIC-256).
 * 1969 - Началась разработка первого и образцового ОО-языка программирования [SmallTalk](https://ru.wikipedia.org/wiki/Smalltalk).
-* 1970 - Pascal - придумал Никлаус Вирт. Есть современная реализация Free Pascal Compiler со следующими возможностями:
+* 1970 - Pascal - придумал Никлаус Вирт. Для обучения студентов ВУЗов быть программистами. Есть современная реализация Free Pascal Compiler со следующими возможностями:
 	- TUI среда fp-ide совместимая с Turbo Pascal, Borland Pascal имеет встроенный компилятор
 	- fpc - сама утилита компиляции, совместимая с аналогами ранее названых сред и Object Pascal, Delphi
 	- Free Vision - реализация коммерческой TUI-библиотеки Turbo Vision
@@ -244,16 +245,16 @@ There are 9 program headers, starting at offset 64
 * 1972 - С - язык для переноса Unix
 	- gcc - идёт с комплектом GNU Collection Compiler, как основной
 	- clang - на базе LLVM
-	- tcc - позволяет интерпретацию Си
+	- tcc (Tiny C Compiler) - позволяет интерпретацию Си
 	- [sdcc](https://ru.wikipedia.org/wiki/Small_Device_C_Compiler) - для кода микроконтроллеров
-* 1972 - Prolog - язык декларативного программирования
+* 1972 - Prolog (Programming Logically) - язык декларативного программирования
 * 1972 - Представлена первая реализация (3 года спустя) языка SmallTalk. Сейчас есть версия GNU Smalltalk (gst).
-* 1977 - Borne Shell - классическая оболочка UNIX
-* 1983 - C++ - надмножество C
-* 1983 - Ada - до сих пор идёт в комплекте с GCC под именем GNAT
+* 1977 - Borne Shell - классическая оболочка UNIX. Современная реализация: bash
+* 1983 - C++ - надмножество C.
+* 1983 - Ada - первые реализации концепции языка параллельного программирования. До сих пор идёт в комплекте с GCC под именем GNAT
 * 1983 - Objective-C - язык из Next перешедший в Apple
 * 1987 - Perl - универсальный скриптовой язык, не только для составления отчётов . Активная 5 версия, готовится 7.
-* 1987 - Erlang/OTP - функциональный язык для телекома.
+* 1987 - Erlang/OTP - функциональный язык ПП для телекома.
 * 1988 - TCL - один из первых скриптовых языков
 * 1990 - Haskell - функциональный ЯП - хорошо распараллеливает код
 * 1991 - Python
@@ -358,19 +359,55 @@ C - компилируется заранее - то и размер и скор
 Выдающимся достижением здесь является инструмент Xamarin.Forms,
 позволяющий создавать пользовательский интерфейс из набора визуальных элементов, описываемых на языке разметки XAML.
 
+Можно работать в C# в режиме интерпретатора [REPL](https://ru.wikipedia.org/wiki/REPL).
+Для этого есть интерпретатор `csharp` (пакет mono-csharp-shell).
+
 
 ### Современные компилируемые языки программирования
 
-Go-lang
+#### Go-lang
 
-Rust
+#### Rust
 
 ### Интерпретируемые языки программирования
 
-Perl
-Python
-R
-...
+
+#### Basic
+На платформе .Net/Mono работает Visual Basic.
+Установка на Debian/Ubuntu:
+
+	sudo apt install mono-vbnc
+
+Пишем код программы по [образцу](https://www.tutlane.com/tutorial/visual-basic/vb-hello-world-program)
+в файл `Program.vb`:
+
+```basic
+Imports System
+
+Module Module1
+    Sub Main()
+        Console.WriteLine("Hello World!")
+        Console.WriteLine("Press Enter Key to Exit.")
+        Console.ReadLine()
+    End Sub
+End Module
+```
+
+Компилируем:
+
+	vbnc Program.vb
+
+Запускаем:
+
+	mono Program.exe
+
+#### Perl
+
+#### Python
+
+#### R
+
+#### Erlang/OTP
 
 
 ## Источники

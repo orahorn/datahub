@@ -362,6 +362,153 @@ C - компилируется заранее - то и размер и скор
 Можно работать в C# в режиме интерпретатора [REPL](https://ru.wikipedia.org/wiki/REPL).
 Для этого есть интерпретатор `csharp` (пакет mono-csharp-shell).
 
+В Debian/Ubuntu устанавливаем базовую функциональность компилятора:
+
+	sudo apt install mono-mcs
+
+Пишем текст C#  в файл `hello_console.cs`:
+
+```csharp
+using System;
+
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine ("Hello Mono World");
+    }
+}
+```
+
+Компилируем:
+
+	mcs hello_console.cs
+
+Запускаем и получаем результат прогона программы на текстовую консоль:
+
+	./hello_console.exe
+	Hello Mono World
+
+
+Для того, чтобы разрабатывать настольные GUI-приложения ставим пакет разработки под Mono:
+
+	sudo apt install mono-devel
+
+После этого можно составить такой простейший файл (пусть будет `hello_win.cs`)
+для демонстрации оконной системы:
+
+```csharp
+using System;
+using System.Windows.Forms;
+
+public class HelloWorld : Form
+{
+    static public void Main ()
+    {
+        Application.Run (new HelloWorld ());
+    }
+
+    public HelloWorld ()
+    {
+        Text = "Hello Mono World";
+    }
+}
+```
+
+Компилируем с подключением динамической библиотеки Windows.Forms:
+
+	mcs -r:System.Windows.Forms.dll hello_win.cs
+
+Запускаем:
+
+	./hello_win.exe
+
+открывается графическое приложение с заголовком окна "Hello Mono World".
+
+Для разработки Веб приложений на платформе .Net/Mono используем [XSP](https://en.wikipedia.org/wiki/XSP_(software)) сервер:
+
+	sudo apt install mono-xsp4
+
+Напишем текст динамической страницы, который отобразит календарь 
+в файл `hello.aspx`:
+
+```asp
+<%@ Page Language="C#" %>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sample Calendar</title>
+
+</head>
+<asp:calendar showtitle="true" runat="server">
+</asp:calendar>
+
+```
+
+Запускаем вебсервер для отображения динамической ASPX страницы:
+
+
+```sh
+xsp4 --port 9000
+xsp4
+Listening on address: 0.0.0.0
+Root directory: /home/dron/languages/CSharp
+Listening on port: 9000 (non-secure)
+Hit Return to stop the server.
+```
+
+Открывает веб-браузер по адресу: http://localhost:9000/hello.aspx
+
+Будет отображён календарь:
+
+
+```
+<	Сентябрь 2021	>
+Пн	Вт	Ср	Чт	Пт	Сб	Вс
+30	31	1	2	3	4	5
+6	7	8	9	10	11	12
+13	14	15	16	17	18	19
+20	21	22	23	24	25	26
+27	28	29	30	1	2	3
+4	5	6	7	8	9	10
+```
+
+Нажимаем в консоле клавишу *<Enter>*.
+
+Для разработки красивых приложений с видом как в Линукс-дистрибутивах
+можно использовать кроссплатформенные виджеты библиотеку GTK:
+
+	sudo apt install gtk-sharp3-examples monodoc-gtk3.0-manual libgtk3.0-cil-dev gtk-sharp3
+
+В файл `hello_gtk.cs` запишем код на языке C#:
+
+```csharp
+using Gtk;
+using System;
+
+class Hello
+{
+    static void Main ()
+    {
+        Application.Init ();
+
+        Window window = new Window ("Hello Mono World");
+        window.Show ();
+
+        Application.Run ();
+    }
+}
+```
+
+Собираем с пакетом GTK-3 для языка C#:
+
+	mcs hello_gtk.cs -pkg:gtk-sharp-3.0
+
+Запускаем командой `./hello_gtk.exe` или `mono hello_gtk.exe` .
+Также как и в примере выше с Winows.Forms - запускается окно с тем же заголовком.
+Чтобы закрыть приложение - мало нажать на соответствующий системный виджет:
+придётся ещё в консоли нажать клавишу *Ctrl-C*.
+
 
 ### Современные компилируемые языки программирования
 

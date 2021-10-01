@@ -57,6 +57,15 @@
 	- Методы безопасности
 		+ контроль целосности данных: aide
 		+ медовые ловушки вторжения: snort
+* [Тестирование](05-testing.md)
+	- модульное (unit test)
+		+ JUnit - Java тестирование
+		+ NUnit - .Net тестирование
+	- регрессионное
+	- нагрузочное
+	- автоматизация тестирования
+		+ пакет DejaGNU
+		+ сетевое тестирование и пакет Expect
 * Сети и телекоммуникации
 	- SNMP протокол - информация и управление:
 		+ snmpd
@@ -96,8 +105,6 @@
 	- bazaar
 	- fossil - больше чем просто работа с кодом
 	- mercurial
-
-
 * Системы повышенной надёжности
 	- кластеры Apache Zookeeper
 	- ещё раз системы HPE NonStop (истоический экскурс) - запуск копий процессов на разных связных узлах Maited Pair.
@@ -158,4 +165,4 @@
 	- [Debian packages for CAD tools with GUI](https://packages.ubuntu.com/en/hirsute/electronics-cad-gui)
 * [SADT](https://ru.wikipedia.org/wiki/SADT)
 * [DFD](https://ru.wikipedia.org/wiki/DFD)
-
+* 

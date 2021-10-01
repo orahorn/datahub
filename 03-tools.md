@@ -17,7 +17,6 @@
 
 
 
-
 ### make
 
 Система сборки проектов make появилась в Unix, но и встречается
@@ -69,8 +68,9 @@ return EXIT_SUCCESS;
 
 ### CMake
 
-CMake - Crossplatform Make - это кроссплатформенный посредник между файлом CMakeLists.txt , который управляет генерацией самого файла сборки. На Unix - Makefile, а на других программных системах - это файлы проектов конкретной системы сборки.
-
+CMake - Crossplatform Make - это кроссплатформенный посредник между файлом
+CMakeLists.txt, который управляет генерацией самого файла сборки (Makefile).
+На Unix - Makefile, а на других программных системах - это файлы проектов конкретной системы сборки.
 
 Установка пакетов для Debian/Ubuntu по списку:
 
@@ -110,20 +110,20 @@ Generators
   KDevelop3 - Unix Makefiles   = Generates KDevelop 3 project files.
 ```
 
-Комментарии в файлах CMakeList.txt начинаются символом решётки (#).
-
+Комментарии в файлах CMakeList.txt начинаются символом решётки (`#`).
 
 
 
 ### GNU Autotools
 
 
-
 ### Apache Ant
 
 ### ninja-build
 
+
 ### scons
+
 
 ## Интерактивная разработка:
 
@@ -131,7 +131,7 @@ Generators
 
 ### Легковесы: Geany, Codelite, Code::Blocks
 
-###QtCreator
+### QtCreator
 
 ### Среда в комплекте Python: IDLE . Дополнительная среда: Eric
 
@@ -139,12 +139,12 @@ Generators
 
 ### От Oracle к Apache: NetBeans
 
-###        Выходец из IBM: Eclipse
-###        Продукция JetBrains: IntelliJ IDEA, PyCharm
-###        Прочие полукоммерсанты: Sublime Text, Brackets
-###        Неизменный XCode от Apple
-###        MS Visual Studio: Community edition - переносимая среда на Electron.JS
-###        Notepad++ для любителей Windows
+### Выходец из IBM: Eclipse
+### Продукция JetBrains: IntelliJ IDEA, PyCharm
+### Прочие полукоммерсанты: Sublime Text, Brackets
+### Неизменный XCode от Apple
+### MS Visual Studio: Community edition - переносимая среда на Electron.JS
+### Notepad++ для любителей Windows
 
 
 ## Источники

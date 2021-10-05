@@ -110,9 +110,156 @@ Generators
   KDevelop3 - Unix Makefiles   = Generates KDevelop 3 project files.
 ```
 
+Т.е. по сути, CMake инструментарий позволяет вести кроссплатформенную разработку не только в разных ОС,
+но и в разных средах разработки.
+Он признался проектом Qt вместо их нативного в 5-й версии qmake.
+
 Комментарии в файлах CMakeList.txt начинаются символом решётки (`#`).
 
+Технология
 
+Файл `CMakeLists.txt` может быть свой на каждый подкаталог проекта.
+
+Генерация Makefile обеспечивается командой:
+
+        cmake .
+
+Подразумевается, что `.` указывает на тот каталог, где лежит файл `CMakeLists.txt`
+
+Также производится сборочное окружение командой:
+
+        cmake --build .
+
+Его можно выполнять в отдельном каталоге.
+Главное учитывать относительные списки при указании каталогов с источниками сборок.
+
+Сборка может происходить в отдельном каталоге.
+
+Создаём подкаталог (пусть будет `build`) в том же каталоге, где лежит `CMakefile`.
+Переходим в этот подкаталог (`build`).
+
+В нём запускам процедуру тестирования и создания метаконфигурационных файлов для сборки:
+
+        cmake ..
+
+родительский каталог (`..`) в данном случае указывает месторасположение исходных файлов с текстами
+программ и метафайлом `CMakeLists.txt`.
+
+Если всё удачно, то будут в подкаталоге сборки (`build`) созданы файлы кеша, логи и сборочный файл
+Unix-утилиты `make` под названием `Makefile`.
+
+Этот же процесс можно проделать с помощью только одной команды `cmake`, чтобы избежать особенностей функционирования
+конкретной оболочки + специфики команд ОС. Для этого используется опция `-E` (**E**xecute command ?  - режим команд - выполнения).
+
+Создадим каталог сборки (`buid`):
+
+        cmake -E make_directory build
+
+Сменить каталог (`chdir build`) и запустить в нём сборку из конфигурации собранной в каталог выше (`cmake ..`):
+
+        cmake -E chdir build cmake ..
+
+Все эти команды выполняет cmake  в своём процессе, а это значит, что после завершения этого процесса, управление от cmake
+возвращается обратно в оболочку. Т.е. мы остаёмся в текущем каталоге.
+Поэтому, чтобы выполнить команды в сборочном подкаталоге (`build` для нашего примера):
+
+        cmake --build build
+
+
+Синтаксис CMake позволяет указывать размещение проекта
+в каталогах с разным назначением. Создадим эти каталоги командой cmake:
+
+	cmake -E make_directory include
+	cmake -E make_directory src
+
+В каталоге `include` разместим файл `foo.h` с таким тривиальным содержимым:
+
+```c++
+void foo();
+
+```
+
+В `src` - `foo.cc` запишем определение функции `foo()`:
+
+```c++
+#include <iostream>
+#include "foo.h"
+
+void foo()
+{
+    std::cout << "Hello World!\n";
+}
+```
+
+Остаётся для примера добавить точку входа - функцию `main()` в одноимённый файл `main.cc` в тот же подкаталог (`src`):
+
+```c++
+#include "foo.h"
+
+int main()
+{
+    foo();
+    return 0;
+}
+```
+
+В рабочем каталоге создаём сборочный файл `CMakeLists.txt`:
+
+```cmake
+cmake_minimum_required(VERSION 2.4)
+project(hello_world)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/src)
+include_directories(${PROJECT_SOURCE_DIR})
+add_library(applib src/foo.cc)
+add_executable(app src/main.cc)
+target_link_libraries(app applib)
+```
+
+Создаём сборочный каталог:
+
+	cmake -E make_directory build
+
+Переходим в него и собираем `Makefile`:
+
+```
+cmake -E chdir build cmake ..
+-- The C compiler identification is GNU 4.9.2
+-- The CXX compiler identification is GNU 4.9.2
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/dron/languages/C++/CMake5/build
+```
+
+Окончательно собираем проект утилитой make:
+
+```
+cmake -E chdir build make
+Scanning dependencies of target applib
+[ 50%] Building CXX object CMakeFiles/applib.dir/src/foo.o
+Linking CXX static library libapplib.a
+[ 50%] Built target applib
+Scanning dependencies of target app
+[100%] Building CXX object CMakeFiles/app.dir/src/main.o
+Linking CXX executable app
+[100%] Built target app
+```
+
+
+Запускаем полученное приложение :
+
+```
+./build/app
+Hello World!
+```
 
 ### GNU Autotools
 
@@ -149,5 +296,10 @@ Generators
 
 ## Источники
 
-
+* [Документация по CMake](https://cmake.org/documentation/)
+* [CMake Tutorial](https://cmake.org/cmake-tutorial/)
+* Указание на сборку и линковку библиотеки:
+        - [add\_library](https://cmake.org/cmake/help/v3.0/command/add_library.html)
+        - [target\_link\_libraries](https://cmake.org/cmake/help/v3.0/command/target_link_libraries.html)
+* ["Hello World" with multiple source files](https://riptutorial.com/cmake/example/22391/-hello-world--with-multiple-source-files)
 

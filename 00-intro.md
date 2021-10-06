@@ -78,11 +78,11 @@
 	- Уровень представляния данных
 		+ кодировки фиксированной и переменной ширины: KOI8-R vs UTF-8
 	- Система сигнализации №7 в телефонии и мобильных сетях GSM-5G
-* Производительность и распараллеливание
-	- Erlang/OTP
-	- Node.JS - распределённая системная платформа универсального язывка программирования JavaScript
+* [Производительность и распараллеливание](20-parallelization.md)
 	- Tandem/HPE/NonStop - параллельная обработка транзакций.
 	- Технологии HPC и вычислительные кластеры
+	- Erlang/OTP
+	- Node.JS - распределённая системная платформа универсального язывка программирования JavaScript
 * Роль баз данных
 	- локальные СУБД
 		+ BerkleyDB (Oracle DBM, GDBM, LMDB, QDBM,...)
@@ -165,4 +165,3 @@
 	- [Debian packages for CAD tools with GUI](https://packages.ubuntu.com/en/hirsute/electronics-cad-gui)
 * [SADT](https://ru.wikipedia.org/wiki/SADT)
 * [DFD](https://ru.wikipedia.org/wiki/DFD)
-* 

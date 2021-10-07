@@ -60,6 +60,13 @@ AMD продвигает стандарт [OpenCL](https://ru.wikipedia.org/wiki
 
 ## Промышленный стандарт HPC
 
+
+
+## Библиеотека MPI
+
+MPI используется в языках программирования C/C++/Fortran.
+Она используется для формирования вычислительного кластера.
+
 ## Источники
 
 * Блог Хабра:
@@ -74,4 +81,5 @@ AMD продвигает стандарт [OpenCL](https://ru.wikipedia.org/wiki
 * [Параллельные вычислительные системы](https://ru.wikipedia.org/wiki/%D0%9F%D0%B0%D1%80%D0%B0%D0%BB%D0%BB%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B)
 * [Распределённые вычисления](https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D1%91%D0%BD%D0%BD%D1%8B%D0%B5_%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F)
 * [Параллельные вычисления](https://ru.wikipedia.org/wiki/%D0%9F%D0%B0%D1%80%D0%B0%D0%BB%D0%BB%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F)
-
+* [Параллельные вычисления в оптике  и оптоинформатике](https://books.ifmo.ru/file/pdf/558.pdf)
+* [Технологии построения и использования кластерных систем](https://intuit.ru/studies/courses/542/398/info)

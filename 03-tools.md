@@ -304,7 +304,33 @@ make install
 
 ### Apache Ant
 
+Apache Ant - сборочное средство проектов на Java. 
+Файл управляющий процессом автосборки и развёртывания программного продукта пишется на языке разметки XML.
+Ant легко вызывается из командной строки и может интегрироваться с бесплатными и коммерческими IDE.
+
+Для корректной работы Ant нужно установить переменную среды `$JAVA_HOME`.
+
+Смотрим версию:
+
+	apt show ant -a
+
+
+Пример сборочного файла:
+
+```xml
+<?xml version = "1.0"?>
+<project name = "Hello World Project" default = "info">
+   <property name = "sitename" value = "www.tutorialspoint.com"/>
+
+   <target name = "info">
+      <echo>Apache Ant version is ${ant.version} - You are at ${sitename} </echo>
+   </target>
+</project>
+```
+
+
 ### ninja-build
+
 
 
 ### scons
@@ -345,4 +371,5 @@ make install
 * [Инструментальное программное обеспечение](https://ru.wikipedia.org/wiki/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%B5_%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5)
 * [CASE](https://ru.wikipedia.org/wiki/CASE) - computer-aided software engineering
 * [configure script](https://en.wikipedia.org/wiki/Configure_script)
+* [Apache Ant Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/izuchite-apache-ant/apache-ant-tutorial) ; 16 Мая 2019 г.
 

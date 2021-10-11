@@ -393,6 +393,31 @@ Ant легко вызывается из командной строки и мо
 
 ### Среда в комплекте Python: IDLE . Дополнительная среда: Eric
 
+В базовом дистрибутиве Python есть интегрированная среда разработки IDLE -
+Integrated Development & Learning Environment.
+
+IDLE - есть в репозиториях.
+Она хороша для тех, кто использует простейшую графику на TCL/Tk
+До перехода на 3-й Python пакет  назывался idle3 в Debian-основанных дистрибутивах.
+Нужен пакет python3-tk - это пакет TkInter.
+В ALTLinux пакет называется: python3-modules-tkinter .
+Запускать среду IDLE можно командой:
+
+	python3 -m idlelib.idle
+
+
+Среда названа в честь актёра Эрик Айдл, который играл в сериале Monty Python.
+
+Может быть поэтому ещё одну среду разработки кода для Pyhton назвали eric IDE
+Она интегрирует Python 3 и код написаный на виджетах Qt5 - [PyQt](https://ru.wikipedia.org/wiki/PyQt).
+
+Ставим в Debian/Ubuntu:
+
+	sudo apt install eric
+
+Eric даёт возможность проводить рефакторинг, профилирование и т.д.
+
+
 ### R: RStudio
 
 ### От Oracle к Apache: NetBeans
@@ -400,6 +425,7 @@ Ant легко вызывается из командной строки и мо
 ### Выходец из IBM: Eclipse
 
 ### Продукция JetBrains: IntelliJ IDEA, PyCharm
+
 
 ### Прочие полукоммерсанты: Sublime Text, Brackets
 ### Неизменный XCode от Apple

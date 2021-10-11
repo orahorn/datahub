@@ -357,6 +357,10 @@ Ant легко вызывается из командной строки и мо
 
 ### Легковесы: Geany, Codelite, Code::Blocks
 
+Текстовый редактор **Geany** зависит только от библиотеки GTK (нет тяжёлых GNOME, KDE связей). Плагины обеспечивают модульность.
+Благодаря чему есть поддержка синтаксиса нескольких десятков языков программирования, средств коллективной разработки. Прямо из редактора вызов средств компиляции, отладки. Постоянно разрабатывается.
+
+
 
 
 ### QtCreator
@@ -390,5 +394,6 @@ Ant легко вызывается из командной строки и мо
 * [configure script](https://en.wikipedia.org/wiki/Configure_script)
 * [Apache Ant Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/izuchite-apache-ant/apache-ant-tutorial) ; 16 Мая 2019 г.
 * [Автоматизация сборки](https://ru.wikipedia.org/wiki/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F_%D1%81%D0%B1%D0%BE%D1%80%D0%BA%D0%B8)
+*  [Выпуск интегрирированной среды разработки Geany 1.38](https://www.opennet.ru/opennews/art.shtml?num=55947) ;  11.10.2021 08:19
 
 

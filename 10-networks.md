@@ -39,8 +39,89 @@
 
 	sudo apt install libace-doc
 
+## Средства анализа и управления сетевым трафиком
+
+
+###  tcpdump
+
+### wireshark/tshark
+
+### netcat
+
+### ntop
+
+
+### Пакет iproute2
+
+## Уровень представления данных: ещё раз о кодировках символов
+
+Передача естественных языков происходит посимвольно: т.е. символ становится минимальной передаваемой единицей информацией.
+Традиционно первой кодировкой была ASCII (7-бит), она умещалась в представление байта (8-бит): старший бит
+использовался для контроля чётности или иных целей.
+Т.о. алфавит языка составлял 128 значений, первые 32 использовались для кодирования не символов, но
+команд управления устройством, через которое проходят этот поток. Т.е. они часто отсеивались на выходе.
+Но не все: например, при сохранении в файл, нужно сохранять символы переводы строк.
+
+### Кодировки фиксированной и переменной ширины: KOI8-R, CP-1251... vs UTF-8
+
+Следующим этапом эволюции в кодировании символов было упразнение старшего бита байта как контрольного по чётности.
+Т.о. появились новые значения от 128 до 255 в кодиравнии символов. Их стали занимать псевдографикой и кодировками
+отдельных национальных алфавитов (за искл. азиатских языков).
+
+В Европе алфавиты языков условно можно разделить на группы:
+
+* [Латинница](https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%90%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82%D1%8B_%D0%BD%D0%B0_%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%B5_%D0%BB%D0%B0%D1%82%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B3%D0%BE)
+* [Греческий](https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%90%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82%D1%8B_%D0%BD%D0%B0_%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%B5_%D0%B3%D1%80%D0%B5%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B0)
+* [Кириллица](https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9A%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0)
+* Тюркские и т.д.
+
+Большинство из них умещается в 8-битный [набор символов](https://ru.wikipedia.org/wiki/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80_%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D0%BE%D0%B2):
+
+* Англо-латинские:
+	- ISO 646
+		+ [ASCII](https://ru.wikipedia.org/wiki/ASCII) - 7 бит
+	- [BCDIC](https://ru.wikipedia.org/wiki/BCDIC) - 6 бит
+	- [EBCDIC](https://ru.wikipedia.org/wiki/EBCDIC) - 8 бит
+* Кодировки Windows:
+	- [Windows-1250](https://ru.wikipedia.org/wiki/Windows-1250) - языки на основе латиницы, Центральная Европа
+	- [Windows-1251](https://ru.wikipedia.org/wiki/Windows-1251) - русская кодировка до сих пор популярна. Придумана в организациях "Диалог" и "Параграф" при участи офиса Майкрософт...
+	- Windows-1252 - Западная Европа
+	- [Windows-1253](https://ru.wikipedia.org/wiki/Windows-1253) - греческий
+	- [Windows-1254](https://ru.wikipedia.org/wiki/Windows-1254) - турецкий, в т.ч. азербайджанский
+* [КОИ-8](https://ru.wikipedia.org/wiki/%D0%9A%D0%9E%D0%98-8) - русская unix'овая сетевая кодировка. Варинты есть Укр.
+* [ISO 8859](https://ru.wikipedia.org/wiki/ISO_8859) - международные кодировки
+	- [ISO 8859-1](https://ru.wikipedia.org/wiki/ISO_8859-1) - расширенная латиница. Как Windows−1252.
+	- [ISO 8859-2](https://ru.wikipedia.org/wiki/ISO_8859-2) - восточноевропейские языки. Как Windows-1250.
+	- [ISO 8859-3](https://ru.wikipedia.org/wiki/ISO_8859-3) - южноевропейские языки, в том числе турецкий
+	- [ISO 8859-4](https://ru.wikipedia.org/wiki/ISO_8859-4) - североевропейские языки: прибалтийский, финский
+	- [ISO 8859-5](https://ru.wikipedia.org/wiki/ISO_8859-5) - **кириллические языки**:
+		+ русский
+		+ украинский
+		+ белорусский
+		+ сербский
+		+ македонский
+	- [ISO 8859-6](https://ru.wikipedia.org/wiki/ISO_8859-6) - арабский язык
+	- [ISO 8859-7](https://ru.wikipedia.org/wiki/ISO_8859-7) - греческий
+	- [ISO 8859-8](https://ru.wikipedia.org/wiki/ISO_8859-8) - иврит
+	- [ISO 8859-9](https://ru.wikipedia.org/wiki/ISO_8859-9) - турецкий. Аналог: Windows-1254.
+	- [ISO 8859-10](https://ru.wikipedia.org/wiki/ISO_8859-10) - снова Северная Европа
+	- [ISO 8859-11](https://ru.wikipedia.org/wiki/ISO_8859-11) - тайский язык: Таиланд и Лаос
+	- [ISO 8859-13](https://ru.wikipedia.org/wiki/ISO_8859-13) - прибалтийские языки
+	- [ISO 8859-14](https://ru.wikipedia.org/wiki/ISO_8859-14) - кельтские языки
+	- [ISO 8859-15](https://ru.wikipedia.org/wiki/ISO_8859-15) - снова западноевропейские языки
+	- [ISO 8859-16](https://ru.wikipedia.org/wiki/ISO_8859-15) - снова восточноевропейская латиница
+* [MIK](https://ru.wikipedia.org/wiki/%D0%91%D0%BE%D0%BB%D0%B3%D0%B0%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BA%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0) - болгарская кириллица
+
+Обилие этих и других непредставлянных однобайтных языков для каждого набора символов, а также то, что ими
+можно составлять одну единицу (файл, сообщение) и невозможность чередовать языки привели к созданию
+многобайтной кодировки всех языков мира и др. символов - [Юникод](https://ru.wikipedia.org/wiki/Юникод).
+
+
+
+
+
 ## Источники информации
 
-*  [Serial Programming HOWTO](http://linux.yaroslavl.ru/docs/howto/Serial-Programming/Serial-Programming-HOWTO_ru.html) ; автор: Gary Frerking <gary@frerking.org>, Peter Baumann ; Русский перевод А.Гавва (2002 г.Львов). 
-* 
+*  [Serial Programming HOWTO](http://linux.yaroslavl.ru/docs/howto/Serial-Programming/Serial-Programming-HOWTO_ru.html) ; автор: Gary Frerking <gary@frerking.org>, Peter Baumann ; Русский перевод А.Гавва (2002 г.Львов).
+
 

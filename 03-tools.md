@@ -551,10 +551,50 @@ PyCharm и IntelliJ IDEA - интегрированы со средой git.
 
 ### Неизменный XCode от Apple
 
+На платформе Apple, пожалуй, единственное корневое средство разработки - это
+XCode из магазина приложений AppStore.
+Содержит средства разработки:
+
+* C
+* Objective-C
+* Swift
+* AppleScript
+* Python
+* Ruby
+
+Третьи стороны добавляют:
+
+* Pascal - Free и устаревший GNU
+* Ada
+* C#
+* Go
+* Perl
+
+
+Также есть средство создания пользовательских графических интерфейсов под прикладной инетрфейс программирования
+[Cocoa](https://ru.wikipedia.org/wiki/Cocoa) под названием 
+[Interface Builder](https://ru.wikipedia.org/wiki/Interface_Builder) .
+
+Также есть средство трассировки ядра [DTrace](https://ru.wikipedia.org/wiki/DTrace) из OpenSolaris, некогда созданное
+компанией SUN Microsystems.
+
+Под капотом с XCode идёт сборный компилятор GCC и LLVM с отладчиами оттуда: GDB и LLDB соответственно.
+
+Также интегрированы:
+
+* [Metal (API)](https://en.wikipedia.org/wiki/Metal_(API)) - низкоуровневый ускоряющий графический интерфейс
+* Системы коллективной разработки на основе Git:
+	- [GitHub](https://ru.wikipedia.org/wiki/GitHub)
+	- [GitLab](https://en.wikipedia.org/wiki/GitLab)
+	- [Bitbucket](https://ru.wikipedia.org/wiki/Bitbucket)
+
+
 
 ### MS Visual Studio: Community edition - переносимая среда на Electron.JS
 
-### Notepad++ для любителей Windows
+
+
+### Notepad2, Notepad++ для любителей Windows
 
 
 ## Источники

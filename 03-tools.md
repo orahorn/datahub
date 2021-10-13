@@ -453,14 +453,55 @@ apt install netbeans
 Там будут лежать Makefile, main.c и др. файлы.
 Сначала создаются образцы.
 Из них можно собирать проект.
-Для этого предпочтительно очистить и запустить его кнопкой "Очистить и собрать проект" (shift_F11) или сделать это через меню "Выполнить".
+Для этого предпочтительно очистить и запустить его кнопкой "Очистить и собрать проект" (shift\_F11) или сделать это через меню "Выполнить".
 
 Для того, чтобы отлаживать программу, можно установить контрольную точку.
 Достаточно нажать указателем мышки справа от строки, где нужно остановиться - появится подсветка и возможность пройти до этой точки. Также можно смотреть переменные на отдельной вкладке.
 
 
-
 ### Выходец из IBM: Eclipse
+
+Среда Eclipse позволяет вести кроссплатформенную разработку, в том числе для:
+
+* встраиваемых систем
+* удалённых мейнфреймов
+* HPE NonStop серверов на разных языках
+
+Подобная модульность допускается благодаря системе плагинов.
+
+Полезные пакеты  для программирования в  С/С++ в Debian/Ubuntu начинаются с `eclipse-cdt*` . Например:
+
+* [eclipse-cdt](https://packages.debian.org/source/bullseye/eclipse-cdt) - базовый плагин C/C++
+* [eclipse-cdt-qt](https://packages.debian.org/stretch/eclipse-cdt-qt) - Qt framework support for Eclipse CDT
+* [eclipse-cdt-launch-remote](https://packages.debian.org/stretch/eclipse-cdt-launch-remote) - плагин позволяет удалённо загружать код C/C++ (например, на встраиваемые системы)
+* [eclipse-cdt-jni](https://packages.debian.org/stretch/eclipse-cdt-jni) -  [Java Native Interface](https://ru.wikipedia.org/wiki/Java_Native_Interface) позволяет высвечивать синтаксис, запускать отладчики, генераторы Makefile, делать разборы кода
+* [eclipse-cdt-autotools](https://packages.debian.org/stretch/eclipse-cdt-autotools) - интеграция с GNU automake/autoconf
+
+
+Чтобы разрабатывать приложения на Java, нужно ставить пакет [eclipse-jdt](https://packages.debian.org/stretch/eclipse-jdt)  (в Debian 8 и до Ubuntu-18.04).
+
+В новых версиях может использоваться плагины
+[libeclipse-jdt-apt-core-java](https://packages.debian.org/bullseye/libeclipse-jdt-apt-core-java)
+
+Но [рекомендуется загружать](https://wiki.debian.org/Eclipse) Eclipse с официального сайта в новых версиях Debian/Ubuntu: не совершайте ошибок, если не работает пакетная версия.
+
+Также есть пакет [Eclipse-Titan](https://packages.ubuntu.com/impish/eclipse-titan) - это по сути пакет-дистрибутив eclipse с привязанными в него средствами разработки полного цикла: компиляторы, линковщики, ассемблеры, отладчики, трансляторы...
+
+
+При старте оболочке программа запрашивает рабочее пространство. По-умолчанию: `$HOME/workspace`, но его можно поменять в настройках и командной строке.
+
+Сама среда Eclipse IDE работает только на уже установленной JRE.
+
+
+Словарь:
+
+* CDT - C/C++ Developer's Toolkit
+* CDT  - C Development Toolkit
+* DSDP - Device Software Development Platform
+* IDE - Integrated Development Environment
+* JDT - Eclipse Java development tools - http://www.eclipse.org/jdt/
+* SWT - Standard Widget Toolkit
+
 
 ### Продукция JetBrains: IntelliJ IDEA, PyCharm
 
@@ -484,6 +525,7 @@ apt install netbeans
 * [configure script](https://en.wikipedia.org/wiki/Configure_script)
 * [Apache Ant Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/izuchite-apache-ant/apache-ant-tutorial) ; 16 Мая 2019 г.
 * [Автоматизация сборки](https://ru.wikipedia.org/wiki/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F_%D1%81%D0%B1%D0%BE%D1%80%D0%BA%D0%B8)
-*  [Выпуск интегрирированной среды разработки Geany 1.38](https://www.opennet.ru/opennews/art.shtml?num=55947) ;  11.10.2021 08:19
+* [Выпуск интегрирированной среды разработки Geany 1.38](https://www.opennet.ru/opennews/art.shtml?num=55947) ;  11.10.2021 08:19
+* [Eclipse Titan™](https://projects.eclipse.org/projects/tools.titan)
 
 

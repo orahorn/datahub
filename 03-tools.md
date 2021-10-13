@@ -506,9 +506,34 @@ apt install netbeans
 ### Продукция JetBrains: IntelliJ IDEA, PyCharm
 
 
+Поиск IntelliJ IDEA на Ubuntu (с версии 16.04LTS):
+
+	snap find idea
+
+Установка:
+
+	snap install intellij-idea-community
+
+При создании проекта следует не указывать дополнительные языки программирования вроде Kotlin
+
+На определённом шаге запросить плагины и из них выбирать только консольное приложение.
+
+Установка [PyCharm](https://snapcraft.io/pycharm-community) в Ubuntu:
+
+	sudo snap find pycharm
+	sudo snap info pycharm-community
+	sudo snap install pycharm-community
+
+PyCharm и IntelliJ IDEA - интегрированы со средой git.
+Есть обёртка , чтобы делать коммиты, ветки, загрузки/выгрузки дерева исходного кода.
+
+
 ### Прочие полукоммерсанты: Sublime Text, Brackets
+
 ### Неизменный XCode от Apple
+
 ### MS Visual Studio: Community edition - переносимая среда на Electron.JS
+
 ### Notepad++ для любителей Windows
 
 

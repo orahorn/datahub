@@ -549,6 +549,8 @@ PyCharm и IntelliJ IDEA - интегрированы со средой git.
 Тоже был коммерческий, но доступен всем на разных платформах для скачивания.
 С Сентября 2021 г. компания Adobe выложила его в [открытый доступ](https://github.com/adobe/brackets), прекратив разработку.
 
+Из этой же серии редактор для программистов [Atom](https://ru.wikipedia.org/wiki/Atom_(%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D1%80%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%BE%D1%80)) написаный на [Electron.JS](https://ru.wikipedia.org/wiki/Electron).
+
 ### Неизменный XCode от Apple
 
 На платформе Apple, пожалуй, единственное корневое средство разработки - это
@@ -591,6 +593,34 @@ XCode из магазина приложений AppStore.
 
 
 ### MS Visual Studio: Community edition - переносимая среда на Electron.JS
+
+Кроссплатформенное средство разработки от Microsoft [VSC](https://snapcraft.io/code)
+очень популярно среди не только пользователей Windows.
+Установить в Ubuntu можно командой:
+
+	sudo snap install --classic code
+
+Также есть [инструкция](https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions) по скачке пакета и установки в ручную
+или автоматически из APT-репозитория пакетов.
+Тоже самое касается и [YUM](https://ru.wikipedia.org/wiki/Yum), [Zypper](https://ru.wikipedia.org/wiki/Zypper) репозиториев из соответствующих Linux дистрибутивов.
+
+Сам VSC написан на [Electron.JS](https://ru.wikipedia.org/wiki/Electron) , но позволяет писать код на множестве языков:
+
+* C
+* C#
+* C++
+* Objective-C
+* PHP
+* ...
+
+Возможно проведение отладки на:
+
+* C#
+* F#
+* C/C++
+* Python
+* JS
+* ...
 
 
 

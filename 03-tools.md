@@ -537,7 +537,20 @@ PyCharm и IntelliJ IDEA - интегрированы со средой git.
 
 ### Прочие полукоммерсанты: Sublime Text, Brackets
 
+[Sublime Text](https://ru.wikipedia.org/wiki/Sublime_Text) поддерживает синтаксис разных языков, сборку проектов
+в пакеты, интересный функции типа множественной правки. Но в целом продукт закрытый и проприетарный, надо ставить извне.
+
+Редактор [Brackets](https://ru.wikipedia.org/wiki/Brackets) ориентирован на Веб-разработку:
+
+* HTML
+* CSS
+* JavaScript
+
+Тоже был коммерческий, но доступен всем на разных платформах для скачивания.
+С Сентября 2021 г. компания Adobe выложила его в [открытый доступ](https://github.com/adobe/brackets), прекратив разработку.
+
 ### Неизменный XCode от Apple
+
 
 ### MS Visual Studio: Community edition - переносимая среда на Electron.JS
 

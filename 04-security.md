@@ -30,7 +30,138 @@
 * [bcrypt](https://ru.wikipedia.org/wiki/Bcrypt) - опубликован в 1999 году довольно эффективен и защищён. Может быть реализован в ПЛИС.
 * [семейство SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithms) - с 1993 по 2015 годы.
 
+Эти пароли записываются в файл `/etc/shadow`.
+
+
+
 ### Библиотеки шифрования: OpenSSL и LibreSSL
+
+[OpenSSL](https://ru.wikipedia.org/wiki/OpenSSL)
+- и библиотека с разными криптографическими функциями
+и одноимённая утилита.
+
+Она, например, может создавать пароли, как в файле `/etc/shadow`:
+
+Воспользуемся субкомандой задания 
+пароля [passwd](https://www.openssl.org/docs/manmaster/man1/openssl-passwd.html).
+
+Типичный формат:
+
+	openssl passwd -номер_алгоритма -salt соль_строка открытый_пароль
+
+Пример, зададим два разных значения salt для одного и того же пароля, с простым MD5 шифрованием:
+
+```
+$ openssl passwd -1 -salt Yb12o hazel1%
+$1$Yb12o$RH6.X7ysM2ZRQmK0wPFcH1
+```
+
+Второй вариант будет отличаться по хешу, чтобы не догадались что исходный один и тот:
+
+```
+$ openssl passwd -1 -salt N7f_ hazel1%
+$1$N7f_$39Lg7wjdhExi8p/ZdKvL7/
+```
+
+
+Ещё пример проверки реальности пароля из shadow-файла:
+
+```
+$ openssl passwd -6 -salt jqWL53HOk2Qj/KHS 123456
+$6$jqWL53HOk2Qj/KHS$/eT/4vS0SybAObc4y247HMECapAIm8Y/XJuo.jp7yuoa6gEmkpWDJsIczzBGu/XXvKOPtlSV5Vg4F53y0Jlot/
+```
+
+Есть библиотека crypt, с помощью которой можно разрабатывать приложения.
+Пример написания кода:
+
+	vim passwd1.c
+
+с таким текстом:
+
+```c
+#include <stdio.h>
+#include <crypt.h>
+
+int main(){
+        printf("hash: %s\n", crypt("123456", "jb"));
+        return 0;
+}
+```
+
+Компилируем:
+
+```
+$ LDLIBS=-lcrypt make passwd1
+cc     passwd1.c  -lcrypt -o passwd1
+```
+
+Запускаем:
+
+```
+$ ./passwd1
+hash: jbAcldPn0ogKo
+```
+
+Первые два символа вывода хеша - это та самая соль, которая вторым аргументом задавалась в функции `crypt(3)`.
+
+Ещё пример утилиты OpenSSL для получения сертификата сайта mts.ru:
+
+```
+$ openssl s_client -connect www.mts.ru:443
+CONNECTED(00000005)
+depth=2 C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert Global Root CA
+verify return:1
+depth=1 C = US, O = DigiCert Inc, OU = www.digicert.com, CN = Thawte RSA CA 2018
+verify return:1
+depth=0 C = RU, L = Moscow, O = Mobile TeleSystems Public Joint Stock Company, OU = MTSPJSC, CN = mts.ru
+verify return:1
+---
+Certificate chain
+ 0 s:C = RU, L = Moscow, O = Mobile TeleSystems Public Joint Stock Company, OU = MTSPJSC, CN = mts.ru
+   i:C = US, O = DigiCert Inc, OU = www.digicert.com, CN = Thawte RSA CA 2018
+ 1 s:C = US, O = DigiCert Inc, OU = www.digicert.com, CN = Thawte RSA CA 2018
+   i:C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert Global Root CA
+ 2 s:C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert Global Root CA
+   i:C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert Global Root CA
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIGejCCBWKgAwIBAgIQAvdLvGhEn29Qox+KNYS9yjANBgkqhkiG9w0BAQsFADBc
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+...
+```
+
+Можно закачать тест проверки вашего SSL инструментария:
+
+	wget https://testssl.sh -O  testssl.sh
+
+
+Если есть сомнения, версию SSL можно посмотреть так:
+
+```
+$ openssl version -a
+OpenSSL 1.1.1  11 Sep 2018
+built on: Mon Aug 23 17:02:39 2021 UTC
+platform: debian-amd64
+options:  bn(64,64) rc4(16x,int) des(int) blowfish(ptr) 
+compiler: gcc -fPIC -pthread -m64 -Wa,--noexecstack -Wall -Wa,--noexecstack -g -O2 -fdebug-prefix-map=/build/openssl-Flav1L/openssl-1.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSL_CPUID_OBJ -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DKECCAK1600_ASM -DRC4_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DGHASH_ASM -DECP_NISTZ256_ASM -DX25519_ASM -DPADLOCK_ASM -DPOLY1305_ASM -DNDEBUG -Wdate-time -D_FORTIFY_SOURCE=2
+OPENSSLDIR: "/usr/lib/ssl"
+ENGINESDIR: "/usr/lib/x86_64-linux-gnu/engines-1.1"
+Seeding source: os-specific
+```
+Итого, что может библиотека OpenSSL:
+
+* [SSL](https://ru.wikipedia.org/wiki/SSL) - англ. Secure Sockets Layer шифрованные сессии сетевых соединений Berlkey Socket 
+* [TLS](https://ru.wikipedia.org/wiki/TLS) - англ. transport layer security - шифрование VoIP, 
+* [RSA](https://ru.wikipedia.org/wiki/RSA) - аббревиатура от фамилий Rivest, Shamir и Adleman - стандарт шифрования
+* [Протокол Диффи — Хеллмана](https://ru.wikipedia.org/wiki/Протокол_Диффи_—_Хеллмана) -  криптографический протокол, позволяющий двум и более сторонам получить общий секретный ключ
+* [DSA](https://ru.wikipedia.org/wiki/DSA) - англ. Digital Signature Algorithm — алгоритм цифровой подписи
+* [цифровые сертификаты](https://ru.wikipedia.org/wiki/Цифровой_сертификат)
+* [X.509](https://ru.wikipedia.org/wiki/X.509) — стандарт ITU-T для инфраструктуры открытого ключа (англ. Public key infrastructure, PKI)
+
+В 2014 году появилась уязвимость OpenSSL и команда проекта OpenBSD сделала форк
+[LibreSSL](https://ru.wikipedia.org/wiki/LibreSSL). В нём производится чистка кода.
+
 
 ### Надёжное управление по шифрованному каналу SSH
 
@@ -68,6 +199,9 @@ and check to make sure that only the key(s) you wanted were added.
 
 
 ### Средство конфиденциального обмена данными PGP и GnuPG
+
+
+
 
 ### Защита информации на уровне ОС: SELinux, RBAC  и другие
 
@@ -145,3 +279,7 @@ $ journalctl -u run-u308.service
 * [Аутентификация](https://ru.wikipedia.org/wiki/%D0%90%D1%83%D1%82%D0%B5%D0%BD%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F)
 * [Стеганография](https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B5%D0%B3%D0%B0%D0%BD%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F)
 * [Стеганография в цифровых изображениях](https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B5%D0%B3%D0%B0%D0%BD%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F_%D0%B2_%D1%86%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D1%8B%D1%85_%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F%D1%85)
+* [LibreSSL: очищенная версия OpenSSL (проект OpenBSD)](https://habr.com/ru/post/220367/) ; 22 апреля 2014 в 13:23 - 
+* [Ещё раз об OpenSSL](https://habr.com/ru/post/417069/) ; 13 июля 2018 в 10:25 - 
+
+

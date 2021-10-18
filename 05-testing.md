@@ -19,7 +19,161 @@
 gcov, которая определяет при сеансе прогона тестов, насколько процентов
 и какие части тестируемого кода покрыты или не покрыты тестами.
 
-Пакет lcov расширяет функционал gcov расширяя его отчёты.
+Например, напишем прототип-симулятор командного интерпретатора на классическом Си в файл `gcov1.c`:
+
+
+```c
+#include <stdio.h>
+
+int main(){
+        char command;
+        do{
+                scanf("%c", &command);
+                switch(command) {
+                case '\n':
+                        break;
+                case 'Q':
+                        break;
+                case 'A':
+                        printf("command %c executed\n", command);
+                        break;
+                case 'B':
+                        printf("command %c executed\n", command);
+                        break;
+                default:
+                        printf("I did not recognize the command: %c\n", command);                       break;
+                }
+        } while( command != 'Q');
+
+        return 0;
+}
+```
+
+Он будет выполнять пару команд A и B, а по команде Q завершать свою работу.
+
+Собираем программу со специальным флагом `--coverage`:
+
+```
+$ CFLAGS='--coverage' make gcov1
+cc --coverage    gcov1.c   -o gcov1
+```
+
+Получаем дополнительный файл `gcov1.gcno` для отслеживания покрытия.
+В-ручную создаём текстовый файл `gcov1.txt`, с как-бы введёнными командами:
+
+```
+A
+A
+A
+A
+Q
+
+```
+
+Т.е. введём 4 раза подряд команду A и для выхода - Q.
+
+Теперь выполним тестовый прогон этого файла, подменив им стандартный ввод:
+
+```
+$ ./gcov1< gcov1.txt
+command A executed
+command A executed
+command A executed
+command A executed
+```
+
+После прогона, получаем второй доп. файл прогона `gcov1.gcda` .
+
+Теперь посмотрим специальной утилитой процент покрытия строк исходного
+кода тестами:
+
+```
+$ gcov gcov1
+File 'gcov1.c'
+Lines executed:70.59% of 17
+Creating 'gcov1.c.gcov'
+```
+
+Как видим, 70,5% кода покрыто.
+Посмотрим тот самый файл `gcov1.c.gcov`:
+
+```
+        -:    0:Source:gcov1.c
+        -:    0:Graph:gcov1.gcno
+        -:    0:Data:gcov1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:
+        9:    3:int main(){
+        -:    4:        char command;
+        -:    5:        do{
+        9:    6:                scanf("%c", &command);
+        9:    7:                switch(command) {
+        4:    8:                case '\n':
+        4:    9:                        break;
+        1:   10:                case 'Q':
+        1:   11:                        break;
+        4:   12:                case 'A':
+        4:   13:                        printf("command %c executed\n", command);
+        4:   14:                        break;
+    #####:   15:                case 'B':
+    #####:   16:                        printf("command %c executed\n", command);
+    #####:   17:                        break;
+    #####:   18:                default:
+    #####:   19:                        printf("I did not recognize the command: %c\n", command);                       break;
+        -:   20:                }
+        9:   21:        } while( command != 'Q');
+        -:   22:
+        1:   23:        return 0;
+        -:   24:}
+        -:   25:
+```
+
+До двоеточия (`:`), указано число прогонов или прочерк (`-`), если код к этому не имеет отношение. Но если выработан
+машинный код, который при прогоне не разу не исполнился, то строчки этого исходного кода будут промаркированы
+решётками (`#####`). Из конкретного примера видно, что строки команды B ни разу в процессе прогона не исполнились.
+Т.е. на это надо обратить внимание тестировщику-программисту...
+
+Пакет lcov расширяет функционал gcov расширяя его отчёты. Устанавливается командой:
+
+	sudo apt install lcov
+
+После этого в текущем каталоге запускаем преобразование
+исследования процесса покрытия в файл `coverage.info`, допустим:
+
+```
+$ lcov --capture --directory . --output=coverage.info
+Capturing coverage data from .
+Found gcov version: 7.5.0
+Scanning . for .gcda files ...
+Found 1 data files in .
+Processing gcov1.gcda
+Finished .info-file creation
+```
+
+Конвертируем info-файл в привычный HTML:
+
+
+```
+$ genhtml coverage.info --output-directory=res
+Reading data file coverage.info
+Found 1 entries.
+Found common filename prefix "/home/dron/languages"
+Writing .css and .png files.
+Generating output.
+Processing file C/gcov1.c
+Writing directory view page.
+Overall coverage rate:
+  lines......: 70.6% (12 of 17 lines)
+  functions..: 100.0% (1 of 1 function)
+```
+
+Здесь `/home/dron/languages` - это подкаталог в домашнем каталоге, в частности.
+Перейдя в его подкаталог вывода `res` откроем в браузере там файл `index.html` и получим
+красивый вывод о непроведённых местах тестирования (непокрытых тестами).
+
+
 
 ### Check
 

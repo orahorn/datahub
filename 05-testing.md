@@ -304,7 +304,9 @@ CHECK_ARRAY_CLOSE(массив3, массив4, длина, точность);
 
 Пакет junit4 обеспечивает регрессионное тестирование кода на Java.
 
-[TestNG](http://testng.org) - более новый тестовый пакет, чем JUnit и NUnit
+[TestNG](https://testng.org) - более новый тестовый пакет, чем JUnit и NUnit. В нём есть аннотирование тестов, интеграция со сборочной системой [Ant](https://testng.org/doc/ant.html).
+
+[Junit](https://junit.org) тоже непрерывно развивается, уже доступна версия 5. К особенности относится интеграция со средством разработки [IntelliJ IDEA](https://www.jetbrains.com/idea/) и работа ну уровне [Java API](https://junit.org/junit5/docs/current/api/).
 
 
 

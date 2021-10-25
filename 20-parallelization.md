@@ -51,11 +51,15 @@ AMD продвигает стандарт [OpenCL](https://ru.wikipedia.org/wiki
 
 ### Базы данных NonStop серверов
 
-**Enscribe**
+**Enscribe** - одни из первых БД, представляющие из себя структурированные индексированные файлы (аналогично Berkley Database)
+с набором соответствующего программного обеспечения (ПО) - это ПО называется TMF - Transaction Management Facility. 
 
-**SQL MP**
+**SQL MP** - первое поколение реляционных СУБД. Считается устаревшим и не развивается.
 
-**SQL MX**
+**SQL MX** - NonStop SQL/MX - второе и современное поколение СУБД. Актуальное, постоянно развивается
+и в нём активно исправляются ошибки.
+Для журналирования транзакций SQL базы данных используют подсистему TMF.
+Реплицирование происходит средствами RDF - ПО Remote Database Facility.
 
 
 ## Промышленный стандарт HPC
@@ -84,3 +88,5 @@ MPI используется в языках программирования C/
 * [Параллельные вычисления в оптике  и оптоинформатике](https://books.ifmo.ru/file/pdf/558.pdf)
 * [Технологии построения и использования кластерных систем](https://intuit.ru/studies/courses/542/398/info)
 * [#hpenonstop на Youtube](https://www.youtube.com/hashtag/hpenonstop)
+* [HPE NonStop RDF System Management Manual](https://support.hpe.com/hpesc/public/docDisplay?docId=emr_na-c03417961) (RDF Update 13)
+

@@ -94,14 +94,75 @@ AMD продвигает стандарт [OpenCL](https://ru.wikipedia.org/wiki
 
 
 
-## Библиеотека MPI
+## Стандарт библиеотек MPI
 
 MPI используется в языках программирования C/C++/Fortran.
 Она используется для формирования вычислительного кластера.
+Вышло три стандарта.
+Используется принцип разделяемой памяти и передача данных между процессам в виде сообщений.
+Специальным образом собирается программа, части которой общаются через код-коммуникатор.
+Также может быть использована техника удалённого доступа к вычисляемой памяти.
 
 
+### MPICH
 
-## MPICH
+[MPICH](https://www.mpich.org/) старая библиотека параллельных вычислений.
+Уже использует третью версию.
+Компиляцию программ выполняет обёртка mpicc, а запускает программа mpiexec.
+
+### OpenMPI
+
+С появлением многопроцессорных и многоядерных систем
+была реализована библиотека [Open MPI](https://en.wikipedia.org/wiki/Open_MPI), задействующая доступ к разделяемой памяти.
+Помимо C++ есть поддержка Java.
+
+Простейшая программа [hello_c.c](https://github.com/open-mpi/ompi/blob/master/examples/hello_c.c):
+
+```c
+/*
+ * Copyright (c) 2004-2006 The Trustees of Indiana University and Indiana
+ *                         University Research and Technology
+ *                         Corporation.  All rights reserved.
+ * Copyright (c) 2006      Cisco Systems, Inc.  All rights reserved.
+ *
+ * Sample MPI "hello world" application in C
+ */
+
+#include "mpi.h"
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int rank, size, len;
+    char version[MPI_MAX_LIBRARY_VERSION_STRING];
+
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    MPI_Get_library_version(version, &len);
+    printf("Hello, world, I am %d of %d, (%s, %d)\n", rank, size, version, len);
+    MPI_Finalize();
+
+    return 0;
+}
+```
+
+Компилируем в исполнимый модуль:
+
+	mpicc.openmpi hello_c.c -o hello_e
+
+Запускаем модуль:
+
+```
+$ mpiexec.openmpi -n 5 hello_e
+Hello, world, I am 0 of 5, (Open MPI v2.1.1, package: Open MPI buildd@lcy01-amd64-009 Distribution, ident: 2.1.1, repo rev: v2.1.0-100-ga2fdb5b, May 10, 2017, 130)
+Hello, world, I am 1 of 5, (Open MPI v2.1.1, package: Open MPI buildd@lcy01-amd64-009 Distribution, ident: 2.1.1, repo rev: v2.1.0-100-ga2fdb5b, May 10, 2017, 130)
+Hello, world, I am 3 of 5, (Open MPI v2.1.1, package: Open MPI buildd@lcy01-amd64-009 Distribution, ident: 2.1.1, repo rev: v2.1.0-100-ga2fdb5b, May 10, 2017, 130)
+Hello, world, I am 4 of 5, (Open MPI v2.1.1, package: Open MPI buildd@lcy01-amd64-009 Distribution, ident: 2.1.1, repo rev: v2.1.0-100-ga2fdb5b, May 10, 2017, 130)
+Hello, world, I am 2 of 5, (Open MPI v2.1.1, package: Open MPI buildd@lcy01-amd64-009 Distribution, ident: 2.1.1, repo rev: v2.1.0-100-ga2fdb5b, May 10, 2017, 130)
+
+```
+
 
 ## Parallel Virtual Machine
 
@@ -111,7 +172,7 @@ MPI используется в языках программирования C/
 
 ## Библиеотека OpenCL
 
-## OpenMP
+
 
 ## OpenACC
 

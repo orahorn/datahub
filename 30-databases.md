@@ -176,6 +176,97 @@ sqlite> SELECT * FROM employee;
 
 и также статические библиотеки.
 
+Пишем код в файл `persons2.c`:
+
+```c
+#include <sqlite3.h>
+#include <stdio.h>
+
+static int callback (void *NotUsed, int argc, char **argv, char **szColName) {
+        int i;
+        for (i = 0; i < argc; i++)
+        {
+                printf ("%s = %s\n", szColName[i], argv[i]);
+        }
+        puts("\n");
+        return 0;
+}
+
+int main ()
+{
+        sqlite3 *db;
+        char *szErrMsg = NULL;
+
+        // open database
+        int rc = sqlite3_open("persons.db", &db);
+        if (rc)
+        {
+                puts ("Can't open database\n");
+                return 2;
+        } else {
+                puts ("Open database successfully\n");
+        }
+
+        rc = sqlite3_exec (db, "SELECT * FROM PERSONS;", callback, 0, &szErrMsg);
+        if (rc != SQLITE_OK)
+        {
+                fprintf (stderr, "SQL Error: %s", szErrMsg);
+                return 1;
+        }
+
+        if (db) {
+                sqlite3_close (db);
+        }
+
+        return 0;
+}
+
+```
+
+Компилируем:
+
+```
+$ LDLIBS=-lsqlite3 make persons2
+cc     persons2.c  -lsqlite3 -o persons2
+```
+
+Запускаем:
+
+```
+./persons2
+Open database successfully
+
+id = 1
+fn = Александр
+sn = Андриенко
+tel = +7-909-372-7954
+
+
+id = 2
+fn = Иван
+sn = Маслов
+tel = +7-901-384-5488
+
+
+id = 3
+fn = Бабушка
+sn = Клава
+tel = +7-929-594-0696
+
+
+id = 4
+fn = Валерий
+sn = Смирнов
+tel = +7-905-380-1120
+
+...
+
+```
+
+TODO `my/database/SQLite/persons`:
+
+* Perl
+* TCL
 
 
 ### Резидентная СУБД memcached

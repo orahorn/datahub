@@ -122,6 +122,42 @@ select * from persons;
 2|Иван|Маслов|+7-903-476-3441
 ```
 
+Можно запускать заранее подготовленные в файлах SQL-скрипты .
+Например, запишем в файл `employee.sql` такой текст скрипта:
+
+```SQL
+/*
+
+Syntax:
+
+sqlite3 employee.db < employee.sql
+
+*/
+
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "employee"("EmployeeID" INTEGER PRIMARY KEY NOT NULL, "Name" VARCHAR, "Age" INTEGER);
+INSERT INTO "employee" VALUES(1,'John',34);
+INSERT INTO "employee" VALUES(2,'Mark',44);
+INSERT INTO "employee" VALUES(3,'Mathew',50);
+COMMIT;
+```
+
+Запускаем из командной строки:
+
+	sqlite3 employee.db < employee.sql
+
+
+Смотрим результат:
+
+	sqlite3 employee.db
+
+```SQL
+sqlite> SELECT * FROM employee;
+1|John|34
+2|Mark|44
+3|Mathew|50
+```
 
 Графическое приложение для просмотра БД содержится в пакете ОС `sqlitebrowser`.
 У него [Qt интерфейс](https://ru.wikipedia.org/wiki/Qt)

@@ -42,6 +42,7 @@
 SQLite — встраиваемая легковесная SQL система управления базами данных - изначально разрабатывалась как расширение
 языка программирования [Tcl](https://ru.wikipedia.org/wiki/Tcl) .
 В ОС [Android](https://ru.wikipedia.org/wiki/Android) для работы над приложениями доступна библиотека SQLite.
+Вообще SQLite - это по сути [встраиваемая СУБД](https://ru.wikipedia.org/wiki/%D0%92%D1%81%D1%82%D1%80%D0%B0%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%D0%B0%D1%8F_%D0%A1%D0%A3%D0%91%D0%94) .
 
 Практиковаться можно на сайте [REPL](https://repl.it/languages/sqlite)
 в запущеном интерпретаторе команд SQL.
@@ -340,12 +341,93 @@ DBD SQLite version: 3.22.0
 7,Смена,Дежурная,+7-903-483-3435
 ```
 
-В в стиле Perl есть библиотека [libDBI](http://libdbi.sourceforge.net/) для языка Си.
+В стиле Perl есть библиотека [libDBI](http://libdbi.sourceforge.net/) для языка Си.
 
 
-TODO `my/database/SQLite/persons`:
+Для TCL СУБД SQLite - это ребёнок проекта.
+Однако в дистрибутивах она выделена в отдельный пакет.
+Устанавливаем его:
 
-* TCL
+	apt install libsqlite3-tcl 
+
+В коде своего скрипта подключаем соответствующий пакет:
+
+```tcl
+package require sqlite3
+```
+
+Открываем базу данных db по имени файла:
+
+```tcl
+sqlite3 db "файл.db"
+```
+
+Скрипт `persons.tcl` будет таким:
+
+```tcl
+#!/usr/bin/tclsh
+
+# On Ubuntu-18.04 run:
+#       apt install libsqlite3-tcl
+#
+# Sample of running on "persons.db" SQLite database file
+# and "Persons table"
+#./persons.tcl persons.db 'select * from persons;'
+# 
+
+if {$argc!=2} {
+        puts stderr "Usage: %s DATABASE SQL-STATEMENT"
+        exit 1
+}
+package require sqlite3
+sqlite3 db [lindex $argv 0]
+db eval [lindex $argv 1] x {
+        foreach v $x(*) {
+                puts "$v = $x($v)"
+        }
+        puts ""
+}
+db close
+```
+
+```
+$ ./persons.tcl persons.db 'select * from persons;'
+id = 1
+fn = Александр
+sn = Андриенко
+tel = +7-902-481-5255
+
+id = 2
+fn = Иван
+sn = Маслов
+tel = +7-916-712-5141
+
+id = 3
+fn = Бабушка
+sn = Клава
+tel = +7-929-594-0696
+
+id = 4
+fn = Валерий
+sn = Смирнов
+tel = +7-901-381-1164
+
+id = 5
+fn = Геннадий
+sn = Кузнецов
+tel = +7-903-727-6851
+
+id = 6
+fn = Дежурная
+sn = Смена
+tel = +7-495-974-2745
+
+id = 7
+fn = Смена
+sn = Дежурная
+tel = +7-915-381-2953
+
+```
 
 
 ### Резидентная СУБД memcached

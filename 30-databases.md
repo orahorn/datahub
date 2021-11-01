@@ -263,9 +263,88 @@ tel = +7-905-380-1120
 
 ```
 
+В языке программирования (ЯП) Perl - доступ к реляционным СУБД (РСУБД),
+на языке SQL происходит универсальным способом.
+
+Интерфейс с базами данных унифицирован.
+
+В Debian, Ubuntu ставим пакет libdbd-sqlite3-perl .
+Он зависит от библиотеки общего вида DBI (пакет libdbi-perl) ,
+которая обобщает интерфейс к программированию баз данных.
+В ALTLinux это пакет perl-DBD-SQLite .
+
+В коде используем Perl-модули DBI и DBD::SQLite
+
+Для работы с ними достаточно подключить в начале соотв. модуль:
+
+```perl
+use DBI;
+```
+
+Далее, в зависимости от конкретного типа СУБД нужно ставить нужный модуль DBD (DataBase Driver).
+
+
+Подключение к СУБД (для других баз, см далее):
+
+* MySQL: `$dbh = DBI -> connect ("DBI:mysql: ... ");`
+* Postgres: `$dbh = DBI -> connect ("DBI:Pg:... ");`
+* Oracle: `$dbh = DBI -> connect ("DBI:Oracle:... ");`
+
+Рекомендации по именованию переменных:
+
+* `$h` - описатель (дескриптор, handler) общего назначения
+* `$fh` - описатель открытого файла (file)
+* `$dbh` - описатель отркытой СУБД (database)
+* `$sth` - описатель оператора (statement) обращения к СУБД
+* `$rc` -  логический код (code) возвращаемый (return)  операторами (true / false)
+* `$rv` - числовое значение (value) возвращаемой операторами
+
+Пример кода для SQLite запишем в файл `persons.pl`:
+
+
+```perl
+#!/usr/bin/perl
+
+use DBI;
+use strict;
+
+
+my $dbfile="persons.db";
+my $dbh = DBI->connect("dbi:SQLite:dbname=$dbfile","","")
+        or die $DBI::errstr;   # die передает сообщение в поток ошибок
+print "Opened database successfully\n";
+
+print "DBD SQLite version: $DBD::SQLite::sqlite_version\n";
+
+my $sth = $dbh->prepare("SELECT * FROM persons WHERE id < 10");
+        $sth->execute();
+
+while(my @row = $sth->fetchrow_array()) {
+        print "$row[0],$row[1],$row[2],$row[3]\n";
+}
+```
+
+Делаем исполнимым и запускаем скрипт:
+
+```
+$ chmod u+x persons.pl
+$ ./persons.pl
+Opened database successfully
+DBD SQLite version: 3.22.0
+1,Александр,Андриенко,+7-905-382-1269
+2,Иван,Маслов,+7-902-796-5642
+3,Бабушка,Клава,+7-929-594-0696
+4,Валерий,Смирнов,+7-900-832-3389
+5,Геннадий,Кузнецов,+7-915-425-7609
+6,Дежурная,Смена,+7-495-970-3382
+7,Смена,Дежурная,+7-903-483-3435
+```
+
+В в стиле Perl есть библиотека [libDBI](http://libdbi.sourceforge.net/) для языка Си.
+
+
 TODO `my/database/SQLite/persons`:
 
-* Perl
 * TCL
 
 

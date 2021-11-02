@@ -41,7 +41,117 @@
 а позже, продала все права компании [Oracle](https://ru.wikipedia.org/wiki/Oracle).
 В настоящее время код BDB доступен свободно по AGPL лицензии.
 
+Установка пакетов в Debian/Ubuntu:
 
+* db-util - комплект утилит для манипуляциями файлами данных BDB
+* db5.3-doc - документация
+* libdb-dev - заголовочные файлы для программирования на классическом Си
+* libdb++-dev - интерфейсы классов C++
+* python3-bsddb3
+
+Создадим текстовые файл формата строка ключ, следующая строка - значение. Потом повторяется: строка ключ, строка значение.
+Т.е. нечётные с первой строчки через одну - ключи,  а чётные со второй (также через одну) - значения.
+Пример содержания логинов и паролей в текстовом файле `logins.txt`:
+
+```txt
+user
+123456
+root
+123456
+```
+
+Создаём файл БД :
+
+	db_load -T -t hash -f logins.txt logins.db
+
+Здесь:
+
+	* `-T` - указывает, формат входных текстовых данных, через строку
+	* `-t hash` - тип поиска строки с заданным ключём по хешу
+	* `-f logins.txt` - брать исходные данные из текстового файла `logins.txt`, а не из стандартного ввода
+
+Смотрим всю структуру БД:
+
+```
+$ db_dump -d a logins.db
+In-memory DB structure:
+hash: 0x110000 (open called, read-only)
+meta_pgno: 0
+h_ffactor: 0
+h_nelem: 2
+h_hash: 0x7f4178beece0
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+page 0: hash metadata: LSN [0][1]: level 0
+	magic: 0x61561
+	version: 9
+	pagesize: 4096
+	type: 8
+	metaflags 0
+	keys: 0	records: 0
+	free list: 0
+	last_pgno: 2
+	flags: 0
+	uid: cd 20 5a 0 13 8 0 0 8c 17 a2 7 19 30 0 0 0 0 0 0
+	max_bucket: 1
+	high_mask: 0x1
+	low_mask:  0
+	ffactor: 0
+	nelem: 2
+	h_charkey: 0x5e688dd1
+	spare points:
+	1 (1) 1 (2) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0)
+	0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0)
+	0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0)
+	0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0) 0 (0)
+
+page 1: hash: LSN [0][1]: level 0
+	prev:    0 next:    0 entries:    2 offset: 4084
+	[000] 4091 len:   4 data: root
+	[001] 4084 len:   6 data: 123456
+page 2: hash: LSN [0][1]: level 0
+	prev:    0 next:    0 entries:    2 offset: 4084
+	[000] 4091 len:   4 data: user
+	[001] 4084 len:   6 data: 123456
+```
+
+Как видим: файл разбивается на страницы с записями по определённым смещениям.
+
+Более упрощённый вариант:
+
+```
+$ db_dump -p logins.db
+VERSION=3
+format=print
+type=hash
+h_nelem=2
+db_pagesize=4096
+HEADER=END
+ root
+ 123456
+ user
+ 123456
+DATA=END
+```
+
+Создадим файл `db2txt.py` на языке Python:
+
+
+```python
+#!/usr/bin/python3
+
+import bsddb3
+for k, v in bsddb3.hashopen("logins.db").iteritems():
+        print(k,v)
+```
+
+Читаем данные:
+
+```
+$ ./db2txt.py
+b'root' b'123456'
+b'user' b'123456'
+
+```
 
 ### SQLite
 

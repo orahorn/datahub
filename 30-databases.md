@@ -40,6 +40,7 @@
 Придумали BDB в университете Беркли, позже компания SleepyCat Software занималась коммерческой разработкой и поддержкой СУБД,
 а позже, продала все права компании [Oracle](https://ru.wikipedia.org/wiki/Oracle).
 В настоящее время код BDB доступен свободно по AGPL лицензии.
+Среди поддерживаемых API по Oracle Berlkley DB ЯП, помимо C/C++: Java, C#, Perl, TCL, PHP.
 
 Установка пакетов в Debian/Ubuntu:
 
@@ -628,6 +629,7 @@ tel = +7-915-381-2953
 
 ## Источники информации
 
-
 * [Программирование на Perl DBI](https://www.books.ru/books/programmirovanie-na-perl-dbi-fail-pdf-595893) ; Авторы: Аллигатор Декарт, Тим Банс ; Издательство: Символ-Плюс ; Дата выхода: октябрь 2000 ; ISBN: 5-93286-013-8
+* [Getting Started with Berkeley DB Transaction Processing](https://docs.oracle.com/cd/E17076_02/html/gsg_txn/C/index.html)
+
 

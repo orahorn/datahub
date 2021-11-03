@@ -40,7 +40,8 @@
 Придумали BDB в университете Беркли, позже компания SleepyCat Software занималась коммерческой разработкой и поддержкой СУБД,
 а позже, продала все права компании [Oracle](https://ru.wikipedia.org/wiki/Oracle).
 В настоящее время код BDB доступен свободно по AGPL лицензии.
-Среди поддерживаемых API по Oracle Berlkley DB ЯП, помимо C/C++: Java, C#, Perl, TCL, PHP.
+Среди поддерживаемых API по Oracle Berlkley DB ЯП, помимо C/C++ (Visual C++ .NET 2005+, интеграция с STL): Java, C# , Perl, TCL, PHP.
+Операционные системы: Unix; 32/64-битный Windows, технологии ODBC/JDBC/ADO, Visual Studio 2005+; Apple iOS.
 
 Установка пакетов в Debian/Ubuntu:
 
@@ -49,6 +50,17 @@
 * libdb-dev - заголовочные файлы для программирования на классическом Си
 * libdb++-dev - интерфейсы классов C++
 * python3-bsddb3
+
+Для того, чтобы манипулировать с Oracle Berkeley DB файлами с помощью SQL комманд,
+нужно установить пакеты:
+
+* db5.3-sql-util -
+* db5.3-sql - утилиты командной строки
+* libdb5.3-sql - разделеямая библиотека
+* libdb5.3-sql-dev - заголовочные файлы
+
+Утилита `db5.3_sql` работает аналогично SQLite (см. ниже).
+ 
 
 Создадим текстовые файл формата строка ключ, следующая строка - значение. Потом повторяется: строка ключ, строка значение.
 Т.е. нечётные с первой строчки через одну - ключи,  а чётные со второй (также через одну) - значения.
@@ -631,5 +643,7 @@ tel = +7-915-381-2953
 
 * [Программирование на Perl DBI](https://www.books.ru/books/programmirovanie-na-perl-dbi-fail-pdf-595893) ; Авторы: Аллигатор Декарт, Тим Банс ; Издательство: Символ-Плюс ; Дата выхода: октябрь 2000 ; ISBN: 5-93286-013-8
 * [Getting Started with Berkeley DB Transaction Processing](https://docs.oracle.com/cd/E17076_02/html/gsg_txn/C/index.html)
+* [Berkeley DB Programmer's Reference Guide](https://docs.oracle.com/cd/E17076_02/html/programmer_reference/index.html)
+* [Berkeley DB Installation and Build Guide](https://docs.oracle.com/cd/E17076_02/html/installation/index.html) ;  12/19/2011
 
 

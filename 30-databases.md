@@ -197,6 +197,14 @@ root -> 123456
 user -> 123456
 ```
 
+Есть ещё версия от [GNU](https://www.gnu.org/) проекта: [GDBM](https://www.gnu.org.ua/software/gdbm/).
+Установка в Debian/Ubuntu:
+
+	sudo apt install libgdbm-dev python3-gdbm
+
+Ставится пакет с заголовочными файлами для ЯП Си и пакет для Python-3.
+
+
 ### SQLite
 
 СУБД [SQLite](https://ru.wikipedia.org/wiki/SQLite)

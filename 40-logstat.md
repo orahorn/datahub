@@ -6,8 +6,10 @@
 Это нужно для своевременного понимания характеристик работы системы:
 
 * чтобы не пропустить важное событие на сервере или сбой
+* мониторинг безопасности и предотвращение неавторизованных доступов и вторжений в систему
 * регулировка и распределение нагрузки на части системы уже на этапе установки
 * наблюдение за работой сервера удалённо и последующего его мониторинга
+
 
 ## Сервисы ОС по записи событий
 
@@ -45,8 +47,56 @@ syslog API и через двоеточие (:), собственно, само 
 Есть специально выделенные сервера, которых от других машин централизованно хранят журналы,
 события от которых можно сверять и корреляция может сказать, что в целом произошло на сети...
 
+В последних системах Debian/Ubuntu по умолчанию установлено ПО [rsyslog](https://www.rsyslog.com/)
+в качестве подсистемы регистрации событий в файлы. Оно запускается как сервис [SystemD](https://ru.wikipedia.org/wiki/Systemd).
+
+Посмотреть состояние rsyslog можно, например, так:
+
+```
+$ systemctl status rsyslog.service
+● rsyslog.service - System Logging Service
+   Loaded: loaded (/lib/systemd/system/rsyslog.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2021-11-07 14:48:56 MSK; 4h 52min ago
+     Docs: man:rsyslogd(8)
+           http://www.rsyslog.com/doc/
+ Main PID: 895 (rsyslogd)
+    Tasks: 4 (limit: 4915)
+   CGroup: /system.slice/rsyslog.service
+           └─895 /usr/sbin/rsyslogd -n
+
+ноя 07 14:48:56 brix.localdomain systemd[1]: Starting System Logging Service...
+ноя 07 14:48:56 brix.localdomain rsyslogd[895]: imuxsock: Acquired UNIX socket '/run/systemd/journal/syslog' (fd 3) from systemd.
+ноя 07 14:48:56 brix.localdomain rsyslogd[895]: rsyslogd's groupid changed to 106
+ноя 07 14:48:56 brix.localdomain rsyslogd[895]: rsyslogd's userid changed to 102
+ноя 07 14:48:56 brix.localdomain rsyslogd[895]:  [origin software="rsyslogd" swVersion="8.32.0" x-pid="895" x-info="http://www.rsys
+ноя 07 14:48:56 brix.localdomain systemd[1]: Started System Logging Service.
+ноя 07 14:53:56 brix.localdomain rsyslogd[895]:  [origin software="rsyslogd" swVersion="8.32.0" x-pid="895" x-info="http://www.rsys
+...
+```
+
+Конфигурация находится в файлах  `/etc/rsyslog.d/*.conf` и `/etc/rsyslog.conf`.
+Там определяются сообщения от каких подсистем и с какой важностью пишутся в какие файлы.
+Периодически эти файлы меняют своё имя.
+Старые файлы могут упаковываться и обязательно должны автоматически удаляться
+(иначе будет переполнено дисковое пространство доступоное файловой системе).
+Эту функцию на себя берёт ПО [logrotate](https://github.com/logrotate/logrotate) .
+Эта служба запускается [cron](https://ru.wikipedia.org/wiki/Cron) сервисом.
+В файле `/etc/cron.daily/logrotate` записан скрипт,
+который запускает программу logrotate для каждого файла журнала.
+Файл `/etc/logrotate.d/rsyslog` описывает файлы журналов, которые вырабатывает rsyslog и что с ними делать:
+
+* кого сжимать
+* сколько последних серий файлов держать
+* какие скрипты запускать после ротации логов
+
+
+
 
 ### syslogng
+
+В качестве альтернативы стандартному syslog или rsyslog может быть поставлен
+[syslog-ng](https://en.wikipedia.org/wiki/Syslog-ng).
+
 
 ###  Подсистема systemd и средство journalctl
 
@@ -61,6 +111,8 @@ syslog API и через двоеточие (:), собственно, само 
 ```c
 #include <syslog.h>
 ```
+
+
 
 ## Анализаторы логов
 
@@ -109,5 +161,7 @@ syslog API и через двоеточие (:), собственно, само 
 ### Perl
 
 ## Источники информации
+
+* [Файл регистрации](https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB_%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D0%B8)
 
 

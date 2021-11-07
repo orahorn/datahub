@@ -112,6 +112,42 @@ $ systemctl status rsyslog.service
 #include <syslog.h>
 ```
 
+Он определяет функции и константы для ведения журналов
+в системе приложениям. Запишем в файл `syslog1.c` такой код:
+
+```c
+#include <syslog.h>
+
+int main(){
+        openlog(0, LOG_CONS|LOG_PERROR, LOG_LOCAL6);
+        syslog(LOG_NOTICE, "Program started");
+        closelog();
+        return 0;
+}
+```
+
+Константа `LOG_PERROR` будет дублировать сообщения от вызова `syslog()` на стандартный поток
+ввода-вывода ошибок. `LOG_CONS` будет выводит данные на консоль, в случае даже не запуска сервиса (r)syslog(ng)...
+
+Компилируем:
+
+```
+$ make syslog1
+cc     syslog1.c   -o syslog1
+```
+
+После запуска:
+
+```
+$ ./syslog1
+syslog1: Program started
+```
+
+В файле `/var/log/syslog` появляется запись:
+
+	Nov  7 21:37:47 brix syslog1: Program started
+
+
 
 
 ## Анализаторы логов

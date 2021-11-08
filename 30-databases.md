@@ -329,6 +329,18 @@ Andrey              	Logs
 ```
 
 
+Среди приложений использующих хеши данных могут быть например счётчики с показаниями статистики,
+файлы индексов полей таблиц реляционных баз данных, или каталоги в иерархии данных, такие,
+например, как [LDAP](https://ru.wikipedia.org/wiki/LDAP).
+
+Вот для ведения подобных
+[служб каталогов](https://ru.wikipedia.org/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B1%D0%B0_%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%BE%D0%B2) , где данные лежат в форамте [LDIF](https://ru.wikipedia.org/wiki/LDIF) создана СУБД 
+[LMDB](https://en.wikipedia.org/wiki/Lightning_Memory-Mapped_Database) . Несмотря на то, что писатель в файл
+может быть только один - нет взаимных блокировок между ним и читателями.
+
+
+
+
 ### SQLite
 
 СУБД [SQLite](https://ru.wikipedia.org/wiki/SQLite)

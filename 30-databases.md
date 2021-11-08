@@ -346,6 +346,25 @@ Andrey              	Logs
 
 Компания Google производит свой вариант [LevelDB](https://en.wikipedia.org/wiki/LevelDB) СУБД типа "ключ-значение".
 
+Также довольно популярна СУБД [QDBM](http://fallabs.com/qdbm/) в популярных дистрибутивах:
+
+```
+$ apt-cache pkgnames |grep -i qdbm
+libqdbm-perl
+qdbm-cgi
+qdbm-doc
+libqdbm3++c2
+libxqdbm-dev
+libxqdbm3c2
+libqdbm-java
+libqdbm++-dev
+libqdbm-dev
+ruby-qdbm
+libqdbm14
+qdbm-util
+```
+
+Позиционируется, как более быстрая, менее занимающая место в хранилище и СУБД с более простым интерфейсом API.
 
 
 ### SQLite

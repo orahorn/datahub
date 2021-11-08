@@ -339,6 +339,13 @@ Andrey              	Logs
 может быть только один - нет взаимных блокировок между ним и читателями.
 
 
+БД [Tkrzw](https://en.wikipedia.org/wiki/Tkrzw) Tokyo Cabinet and Kyoto Cabinet - использует механизм поиска ключа по
+[двоичному дереву](https://ru.wikipedia.org/wiki/B%E2%81%BA-%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BE)
+и хеширование ключей. База продолжает развитие СУБД "Tokyo Cabinet", который больше не будет разрабатываться, но
+всё ещё присутствует в последних дистрибутивах ОС.
+
+Компания Google производит свой вариант [LevelDB](https://en.wikipedia.org/wiki/LevelDB) СУБД типа "ключ-значение".
+
 
 
 ### SQLite

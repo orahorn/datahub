@@ -204,6 +204,130 @@ user -> 123456
 
 Ставится пакет с заголовочными файлами для ЯП Си и пакет для Python-3.
 
+Напишем программу на Си для создания базы данных в файл `create1.c`:
+
+```c
+#include <gdbm.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+        GDBM_FILE dbf;
+        char * fn = "students1.db";
+
+        dbf = gdbm_open (fn, 0, GDBM_NEWDB, S_IREAD|S_IWRITE|S_IRGRP|S_IWGRP|S_IROTH, NULL);
+        if (dbf==NULL) {
+                perror ("gdbm_open");
+                return 1;
+        } else {
+                printf ("File \"%s\" opened successfully at %p\n", fn, dbf);
+        }
+
+        char * names[] = {"Andrey", "Catherine", "Vlad", "Ivan" };
+        char * themes[] = {"Logs", "JPEG dirs", "???", "PDD" };
+        int i; datum key, content;
+        for(i=0; i<sizeof(names)/sizeof(char *); i++){
+                printf("i=%d\n", i);
+                key.dptr=names[i];
+                key.dsize=strlen(names[i])+1;
+                content.dptr=themes[i];
+                content.dsize=strlen(themes[i])+1;
+                gdbm_store (dbf, key, content, GDBM_REPLACE);
+        }
+
+
+        gdbm_close (dbf);
+
+        return 0;
+}
+
+```
+
+Скопмилируем:
+
+```
+$ LDLIBS=-lgdbm make create1
+cc     create1.c  -lgdbm -o create1
+```
+
+Приложение создаст файл с данными:
+
+```
+$ ./create1
+File "students1.db" opened successfully at 0x55797027d260
+i=0
+i=1
+i=2
+i=3
+
+$ file students1.db
+students1.db: GNU dbm 1.x or ndbm database, little endian, 64-bit
+
+```
+
+Напишем программу для чтения этого файла ("students1.db" , в нашем примере)
+в файл `reader1.c`:
+
+```c
+#include <gdbm.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+        GDBM_FILE dbf;
+        char *name="students1.db", *rep;
+        dbf = gdbm_open (name, 0, GDBM_READER, 640, NULL);
+        if (dbf == NULL) {
+                const char * ret = gdbm_strerror(gdbm_errno);
+                rep = (char *)malloc ((strlen(name)+strlen(ret))*2);
+                strcpy (rep, ret);
+                strcat (rep, " -> \"");
+                strcat (rep, name);
+                strcat (rep, "\"");
+                perror(rep);
+                free(rep);
+                return EXIT_FAILURE;
+        }
+        datum key, nextkey, content;
+        key = gdbm_firstkey (dbf);
+        char *format="%-20s\t%-20s\n", *sep="---";
+        printf(format, "Student", "Theme");
+        printf(format, sep, sep);
+        while ( key.dptr ) {
+                nextkey = gdbm_nextkey ( dbf, key );
+                content = gdbm_fetch(dbf, key);
+                printf(format, key.dptr, content.dptr);
+                key = nextkey;
+                }
+        gdbm_close (dbf);
+        return EXIT_SUCCESS;
+}
+
+```
+
+Скомпилируем и запустим:
+
+```
+$ LDLIBS=-lgdbm make reader1
+cc     reader1.c  -lgdbm -o reader1
+
+$ ./reader1
+File open error -> "students1.db": No such file or directory
+
+$ mv ../gdbm2/students1.db .
+
+$ ./reader1 
+Student             	Theme               
+---                 	---                 
+Catherine           	JPEG dirs           
+Vlad                	???                 
+Ivan                	PDD                 
+Andrey              	Logs                
+
+```
+
 
 ### SQLite
 
@@ -653,5 +777,6 @@ tel = +7-915-381-2953
 * [Getting Started with Berkeley DB Transaction Processing](https://docs.oracle.com/cd/E17076_02/html/gsg_txn/C/index.html)
 * [Berkeley DB Programmer's Reference Guide](https://docs.oracle.com/cd/E17076_02/html/programmer_reference/index.html)
 * [Berkeley DB Installation and Build Guide](https://docs.oracle.com/cd/E17076_02/html/installation/index.html) ;  12/19/2011
+* [SQLite в ОС ALT Linux wiki](https://www.altlinux.org/SQLite)
 
 

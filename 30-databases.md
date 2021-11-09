@@ -944,6 +944,303 @@ select version(), current_date as cd;
 ### PostgreSQL
 
 
+
+Установка на Debian/Ubuntu-основанных дистрибутивах:
+
+```
+apt update
+apt dist-upgrade
+apt install postgresql
+apt install postgresql-<версия.обновление>
+apt install postgresql-doc
+```
+
+Где `<версия.обновление>` - это, номер основной версии и минорного обновления.
+
+Сервис запускается/останавливается командой:
+
+	systemctl start postgresql.service
+
+Потом в ОС становимся пользователем postgresql:
+
+	su - postgres
+
+Подсоединяемся в консоли ОС с PostgreSQL сервером командой:
+
+	psql
+
+
+Унаследованное ПО:
+ 
+* Установка на устаревшие дистрибутивы старых версий: https://www.postgresql.org/message-id/YBMtd6nRuXyU2zS4%40msg.df7cb.de
+* Репозитории, которые не актуальны кладутся в архив: https://apt-archive.postgresql.org/
+* Там же есть инструкция : в файл  `/etc/apt/sources.list` добавить пару строк: `deb https://apt-archive.postgresql.org/pub/repos/apt DIST-pgdg-archive main` и `deb-src https://apt-archive.postgresql.org/pub/repos/apt DIST-pgdg-archive main`, где `DIST` - кодовое имя дистрибутива, надо смотреть в https://apt-archive.postgresql.org/pub/repos/apt/dists/index.html . Например:
+	- trusty
+	- jessie
+	- ...
+
+
+
+В утилите `psql` можно посмотреть таблицы командой `\l[ist]` . Например:
+
+```sql
+postgres=# \l
+                                  Список баз данных
+    Имя    | Владелец | Кодировка | LC_COLLATE  |  LC_CTYPE   |     Права доступа     
+-----------+----------+-----------+-------------+-------------+-----------------------
+ postgres  | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | 
+ template0 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | =c/postgres          +
+           |          |           |             |             | postgres=CTc/postgres
+ template1 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | =c/postgres          +
+           |          |           |             |             | postgres=CTc/postgres
+(3 строки)
+```
+
+Можно создать свою базу данных командой CREATE DATABASE . Например:
+
+```sql
+CREATE DATABASE tutorial;
+CREATE DATABASE
+postgres=# \list
+                                  Список баз данных
+    Имя    | Владелец | Кодировка | LC_COLLATE  |  LC_CTYPE   |     Права доступа     
+-----------+----------+-----------+-------------+-------------+-----------------------
+ postgres  | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | 
+ template0 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | =c/postgres          +
+           |          |           |             |             | postgres=CTc/postgres
+ template1 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | =c/postgres          +
+           |          |           |             |             | postgres=CTc/postgres
+ tutorial  | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | 
+(4 строки)
+```
+
+Потом можно соединиться с этой базой данных командой `\c` . Также работает. Например:
+
+```sql
+\c tutorial 
+```
+
+Вы подключены к базе данных "tutorial" как пользователь "postgres".
+
+Для выхода из psql программы с интерфейсом командной строки используем команду `\q` .
+
+По умолчанию postgresql даёт соединяться только локально.
+Но можно настроить и удалённый доступ.
+В каталоге `/etc/postgresql/<версия>/main` находятся конфигурационные файлы
+Основной файл `postgresql.conf` содержит большинство настроек.
+Чтобы сервер слушал нужный интерфейс (IP) - открыл сокет - нужно явно этот локальный адрес на локальном интерфейсе указать.
+Брать можно, например из `ifconfig`.
+Тогда например, для интерфейса на котором сконфигурирован адрес 40.3.24.63, строка будет такой (оставляем адрес локальной петли):
+
+```
+listen_addresses = '40.3.24.63,localhost'               # what IP address(es) to listen on;
+```
+
+На удалённой от сервера машине можно поставить только пакет с клиентом postgresql-client-common .
+
+Общий синтаксис клиентской консольной утилиты psql:
+
+	psql[ -h <хост>] <база> <пользователь>
+
+Примеры:
+
+```
+psql -h 40.3.24.63 tutorial postgres
+psql -h localhost basicdemos postgres
+```
+
+Чтобы сервер пускал, нужно в файле `/etc/postgresql/<версия>/main/pg_hba.conf` добавить соотв. запись.
+Например, чтобы пускать ко всем базам данных всех пользователей со всех удалённых машин  по паролю - нужно внести запись:
+
+```
+host     all             all        0.0.0.0/0           md5
+```
+
+Пример тот же для удалённой машины с адресом 40.3.24.62:
+
+```
+host     all             all        40.3.24.62/32           md5
+```
+
+Для того, чтобы позволить удалённо соединяться пользователю postgres , нужно установить на него пароль локально (в psql утилите).
+Делается это командой:
+
+```sql
+ALTER USER postgres WITH PASSWORD 'пароль';
+```
+
+После этого в базе данных можно создавать таблицы.
+Например:
+
+```sql
+ create table test(id bigint);
+CREATE TABLE
+```
+
+В таблицах поля могут иметь разные значения и правила их эксплуатации. Поля могут быть первичными ключами. Пример:
+
+```sql
+tutorial=# create table professors(id int primary key, first_name text not null, last_name text not null, class text null);
+CREATE TABLE
+```
+
+Заполняет таблицу команда INSERT. Пример для таблицы professors:
+
+```sql
+tutorial=# insert INTO professors VALUES ( 1, 'Victor', 'Davur', 'Databases' );
+INSERT 0 1
+```
+
+Просмотрим содержимое таблицы:
+
+```sql
+tutorial=# select * from professors ;
+ id | first_name | last_name |   class   
+----+------------+-----------+-----------
+  1 | Victor     | Davur     | Databases
+(1 row)
+```
+
+
+Обновлять (редактировать) поля (даже ключи) можно командой UPDATE . Например, обновим ключ с 2 на 4:
+
+```sql
+update professors SET id = 4 WHERE id = 2;
+UPDATE 1
+```
+
+Можно создавать наследуемые таблицы. Например, создадим таблицу  coordinators с новым текстовым полем cource_area на основе таблицы professors:
+
+```sql
+ create table coordinators (cource_area text NOT NULL) inherits (professors);
+CREATE TABLE
+```
+
+Тогда можно будет добавлять в таблицу в те же поля, что и у наследуемой таблицы + в конце в новые. Для нашего случая:
+
+```sql
+insert INTO coordinators values (5, 'Pablo', 'Lopez', 'Database Optimization', 'Database Area');
+INSERT 0 1
+```
+
+И вот что получилось:
+
+```sql
+tutorial=# select * from coordinators ;
+ id | first_name | last_name |         class         |  cource_area  
+----+------------+-----------+-----------------------+---------------
+  5 | Pablo      | Lopez     | Database Optimization | Database Area
+(1 row)
+```
+
+
+При этом значения попадают и в родительскую таблицу.
+Т.к. наследуемая таблица с ней связана.
+Вот что с нашим примером:
+
+```sql
+tutorial=# select * from professors;
+ id | first_name | last_name |         class         
+----+------------+-----------+-----------------------
+  1 | Victor     | Davur     | Databases
+  3 | Landy      | Lopez     | Data Structures
+  4 | Daniel     | Alvarez   | Compilers
+  2 | Carlos     | Agular    | Databases 2
+  5 | Pablo      | Lopez     | Database Optimization
+(5 rows)
+```
+
+
+Изменение структуры таблицы возможно уже даже после её заполнение и обновлений.
+Для этого используют команду ALTER TABLE.
+Например, добавим колонку Salary в таблицу Professors:
+
+```sql
+tutorial=# alter table professors add  salary int;
+ALTER TABLE
+```
+
+Если нужны данные только из родительской таблицы (без тех, что добавлены в унаследовавшую дочернюю), то в выражении SELECT используется после ключевого слова FROM выражение ONLY. Например, для нашей таблицы Professors:
+
+```sql
+tutorial=# select * from only professors;
+ id | first_name | last_name |      class      | salary 
+----+------------+-----------+-----------------+--------
+  1 | Victor     | Davur     | Databases       |       
+  3 | Landy      | Lopez     | Data Structures |       
+  4 | Daniel     | Alvarez   | Compilers       |       
+  2 | Carlos     | Agular    | Databases 2     |     40
+(4 rows)
+```
+
+Как видно, строка с идентификатором 5, добавленная в coordinators - отсутствует.
+
+Если нужно вспомнить структуру, уже созданной таблицы, то используется команда:
+
+```sql
+\d таблица
+```
+
+Табиляция работает, как автодополнение - подсказывает нужные таблицы.
+
+Пример просмотра таблицы professors:
+
+```sql
+\d professors
+ id         | integer | NOT NULL
+ first_name | text    | NOT NULL
+ last_name  | text    | NOT NULL
+ class      | text    | 
+ salary     | integer |
+```
+
+
+Также для администрирования можно поставить пакет pgadmin3 с одноимённой командой.
+Это приложение на библиотеке QtGUI.
+Запускается от обычного пользователя и сохраняет конфигурацию.
+
+Более продвинутая 4-я версия находится в пакете pgadmin4 (ставится из репозиториев PostgreSQL.org).
+Запускается командой:
+
+	pgAdmin4
+
+и в браузере открывается ссылка на сервер.
+В нём можно манипулировать данными.
+Только нужно поставить мастер-пароль (допустим 123456).
+
+
+Третьи производители:
+
+* https://en.wikipedia.org/wiki/DBeaver
+* https://dbfiddle.uk/
+* Azure Data Studio
+
+
+Для работы в Perl нужно установить драйвер DBI. Например, в Debian/Ubuntu:
+
+	sudo apt install libdbd-pg-perl
+
+
+Задание:
+
+На языке PL/pgSQL создать БД shop (интернет магазин) со следующей структурой:
+
+* Таблица orders (заказы) с полями: `or_id` (идентификатор заказа), customer (имя покупателя), date (дата заказа).
+* Таблица Warenhouse (товары на складе): `p_id` (идентификатор товара), название товара (product), rest (минимальный остаток на складе), quant (количество единиц товара на складе).
+* Таблица reserved (резерв): `or_id` (идентификатор заказа), `p_id` (идентификатор товара), quant (зарезервированное количество), date (дата резервирования).
+* Таблица `Pds_warn` (предупреждения): `date_time` (дата и время записи), mesg (содержание записи).
+
+2. Заполнить таблицу Warenhouse данными (не менее 3 типов товара).
+3. На языке PL/pgSQL создать триггер и триггерную функцию: `orders_after_insert()`, которая будет выполняться после вставки новой записи в таблицу orders и проверять, есть ли необходимое количество товара на складе.    
+
+Если есть, то зарезервировать товар.
+
+Если необходимого количества на складе нет, то проверить, не находится ли в резерве нужный товар свыше 5 дней. Если требуемый товар имеется и количество товара по просроченным заказам достаточно для исполнения текущего заказа, то просроченные заказы нужно аннулировать, а товар зарезервировать для нового заказа.
+
+Проверить правильность работы триггера на примере записи нового заказа в таблицу Orders.
+
+
+
 ## распределённые СУБД больших данных (NoSQL)
 
 ### MongoDB

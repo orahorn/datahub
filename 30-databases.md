@@ -771,6 +771,16 @@ tel = +7-915-381-2953
 
 ### Резидентная СУБД memcached
 
+[Memcached](https://ru.wikipedia.org/wiki/Memcached) - не совсем БД - это такой способ хранения обрабатываемых записей
+из базы в оперативной более быстрой памяти. Т.е. в логике программы пишутся функции, которые выгребают данные не из дисковой
+удалённой СУБД сразу, а сначала смотрят, есть ли эти записи в Memcached базе. Если есть - то запрос отрабатывает на столько
+быстрее, насколько это возможно при доступе из ОЗУ, чем при открытии сетевого соединения и передачи данных по сети + время
+обращения к данным на дисковом хранилище.
+
+Для перманентного хранения этих захешированных данных
+можно использовать ПО [MemcacheDB](https://github.com/LMDB/memcachedb/) , которая в фоновом режиме складывает данные в 
+файл на диск.
+
 
 ### Ретро БД DBase (xbase), Clipper, FoxPro
 
@@ -816,5 +826,7 @@ tel = +7-915-381-2953
 * [Berkeley DB Programmer's Reference Guide](https://docs.oracle.com/cd/E17076_02/html/programmer_reference/index.html)
 * [Berkeley DB Installation and Build Guide](https://docs.oracle.com/cd/E17076_02/html/installation/index.html) ;  12/19/2011
 * [SQLite в ОС ALT Linux wiki](https://www.altlinux.org/SQLite)
+* [MemcacheDB](https://en.wikipedia.org/wiki/MemcacheDB)
+* [Distributed Caching with Memcached](https://www.linuxjournal.com/article/7451)
 
 

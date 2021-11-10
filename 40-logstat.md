@@ -381,6 +381,49 @@ syslog1: Program started
 	Nov  7 21:37:47 brix syslog1: Program started
 
 
+### systemd journal API
+
+Нативный прикладной интерфейс программирования написан для языка C
+и библиотеки поддержки нужно устанавливать в Debian/Ubuntu:
+
+	sudo apt install libsystemd-dev
+
+Основный заголовочный файл `/usr/include/systemd/sd-journal.h`.
+
+Пишем программу на Си в файл `sdj1.c`:
+
+```c
+#include <systemd/sd-journal.h>
+#include <unistd.h>
+
+int main() {
+        sd_journal_print(LOG_NOTICE, "Hi. My PID is %lu", (unsigned long)getpid());
+        return 0;
+}
+```
+
+с единственной функцией 
+[sd_journal_print()](https://www.freedesktop.org/software/systemd/man/sd_journal_print.html)
+
+
+Собираем:
+
+	LDLIBS=-lsystemd make sdj1
+
+Запускаем:
+
+	./sdj1
+
+Смотрим результат в последней строчке вывода:
+
+```
+$ journalctl --since today
+...
+ноя 10 21:17:01 brix.localdomain CRON[14196]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+ноя 10 21:17:01 brix.localdomain CRON[14195]: pam_unix(cron:session): session closed for user root
+ноя 10 21:17:42 brix.localdomain sdj1[14205]: Hi. My PID is 14205
+```
+
 
 ## Анализаторы логов
 

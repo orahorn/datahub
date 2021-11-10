@@ -1252,6 +1252,28 @@ tutorial=# select * from only professors;
 
 ### MongoDB
 
+СУБД относится к классу [документоориентированных](https://ru.wikipedia.org/wiki/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F_%D0%A1%D0%A3%D0%91%D0%94).
+В качестве модели с данными используется бинарная версия [JSON](https://ru.wikipedia.org/wiki/JSON),
+которая так и называется [BSON](https://ru.wikipedia.org/wiki/BSON).
+Это могут быть строки в UTF-8 формате, двоичный формат, логический, даты, числа, код JavaScript, регулярные выражения, ...
+Уровень вложенности данных - не ограничен.
+
+Максимальный размер документа в MongoDB - 4 Mb .
+
+Вместо таблиц в MongoDB - коллекции.
+
+MongoDB Compass - это графический клиент.
+
+В Debian/Ubuntu ставим пакет `mongodb`: он должен подтянуть оба пакета `mongodb-clients` и `mongodb-server`.
+Проверяем запуском интерпретатора
+
+	mongo
+
+Стоит отметить, что в отличае от классических СУБД, где сервер стоит обычно в единственном экземпляре
+и принимает все риски сбоев и перегрузок на себя -  в Mongo: можно установить несколько серверов, на которых могут храниться
+реплики данных (копии, повторения), что обеспечивает большую доступность (отказоустойчивость) системы данных.
+Запросы к данным тоже не сводятся к какому-то одному языку (как в случае SQL): это могут быть, например,
+регулярные выражения к частям полей по некоторому шаблону и др..
 
 
 ### Redis
@@ -1266,5 +1288,7 @@ tutorial=# select * from only professors;
 * [SQLite в ОС ALT Linux wiki](https://www.altlinux.org/SQLite)
 * [MemcacheDB](https://en.wikipedia.org/wiki/MemcacheDB)
 * [Distributed Caching with Memcached](https://www.linuxjournal.com/article/7451)
-
+* [BSON Types](https://docs.mongodb.com/manual/reference/bson-types/)
+* [JSON and BSON](https://www.mongodb.com/json-and-bson)
+* [BSON (Binary JSON) Serialization](https://bsonspec.org/)
 

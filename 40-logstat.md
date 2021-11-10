@@ -274,8 +274,7 @@ $ pgrep -l dhc
 смотрим сквозь фильтр:
 
 ```
-
-$ journalctl \_PID=1367
+$ journalctl _PID=1367
 ...
 ноя 08 21:06:19 brix.localdomain gsd-color[1367]: could not find device: property match 'XRANDR_name'='HDMI-1' does not exist
 ноя 08 21:06:58 brix.localdomain gsd-color[1367]: failed to set screen _ICC_PROFILE: Не удалось открыть файл «/home/dron/.local/sha
@@ -286,8 +285,6 @@ $ journalctl \_PID=1367
 ноя 10 17:50:27 brix.localdomain dhclient[1367]: DHCPREQUEST of 192.168.3.174 on enp2s0 to 255.255.255.255 port 67 (xid=0x1dc36ea8)
 ноя 10 17:50:27 brix.localdomain dhclient[1367]: DHCPACK of 192.168.3.174 from 192.168.3.1
 ноя 10 17:50:27 brix.localdomain dhclient[1367]: bound to 192.168.3.174 -- renewal in 37822 seconds.
-
-
 ```
 
 Сегодня 10 ноября под номером 1367 значится процесс dhclient , а позавчера gsd-color.

@@ -89,6 +89,73 @@ $ systemctl status rsyslog.service
 * сколько последних серий файлов держать
 * какие скрипты запускать после ротации логов
 
+Можно организовать централизованный сбор сообщений на одном **сервере** по сети от **клиентов**.
+В файле на **сервере** `/etc/rsyslog.conf` раскомментируем две строки:
+
+```
+$ModLoad imudp
+$UDPServerRun 514
+```
+
+или такие
+
+```
+# provides UDP syslog reception
+#module(load="imudp")
+#input(type="imudp" port="514")
+```
+
+
+Открываем UDP порт 514 для входящих на сервере соединений:
+
+	iptables -I INPUT 1 -p UDP --destination-port 514 -j ACCEPT
+
+Проверяем состояние файервола:
+
+```
+$ sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     udp  --  anywhere             anywhere             udp dpt:syslog
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination       
+```
+
+Чтобы сервис воспринял конфигурацию, перезапускаем его:
+
+	systemctl restart rsyslog
+
+
+В `/etc/rsyslog.conf` файле на **клиенте**  добавляем строку правило маршрутизации сообщений syslog:
+
+	*.info @<адрес_сервера>
+
+Также можно создавать файлы в каталоге :
+Чтобы  воспринялась конфигурация, перезапускаем rsyslog:
+
+	systemctl restart rsyslog
+
+Проверяем доставку сообщений.
+На сервере очищаем консоль и контроллируем сообщения попадающие в лог:
+
+```
+clear
+tail -0f /var/log/messages
+```
+
+На клиенте формируем в журнал сообщение:
+
+	logger "Привет с рабочей станции"
+
+Смотрим всплыло ли оно на консоли сервера.
+
+Литература: *Red Hat Enterprise Linux 7 System Administrator’s Guide, Chapter 18: Viewing and Managing Log Files*.
+
+
 
 ### syslogng
 
@@ -145,6 +212,129 @@ $ journalctl -n0 -p info -f
 [Конфигурация journald](https://www.freedesktop.org/software/systemd/man/journald.conf.html)
 находится в файле `/etc/systemd/journald.conf`.
 
+Просматривать журнал можно в диаппазоне времени. Формат такой:
+
+	journalctl [--since "ГГГГ-ММ-ДД  ЧЧ:МИН:СС" [--until ...]]
+
+Вместо даты/времени допустимы сокращения:
+
+* yesterday
+* today
+* tomorrow
+
+Если время не задано, то подразумеваются нули.
+Если выражение не задано - то подразумевается сегодня.
+Пример вывода всех сообщений с обеда сегодняшнего дня:
+
+	journalctl --since 12:00 --until tomorrow
+
+сообщения можно листать, как в программе less.
+
+Или ещё пример просмотра сообщений от 6 ноября (меня не было дома) до вчерашнего дня:
+
+```
+$ journalctl --since 2021-11-06 --until yesterday
+-- Logs begin at Tue 2021-03-16 11:27:43 MSK, end at Wed 2021-11-10 18:35:01 MSK. --
+ноя 07 14:48:54 brix.localdomain kernel: microcode: microcode updated early to revision 0x21, date = 2019-02-13
+ноя 07 14:48:54 brix.localdomain kernel: Linux version 5.4.0-89-generic (buildd@lgw01-amd64-034) (gcc version 7.5.0 (Ubuntu 7.5.0-3
+ноя 07 14:48:54 brix.localdomain kernel: Command line: BOOT_IMAGE=/boot/vmlinuz-5.4.0-89-generic root=UUID=ba13ca3b-094c-4abb-96f0-
+ноя 07 14:48:54 brix.localdomain kernel: KERNEL supported cpus:
+ноя 07 14:48:54 brix.localdomain kernel:   Intel GenuineIntel
+ноя 07 14:48:54 brix.localdomain kernel:   AMD AuthenticAMD
+ноя 07 14:48:54 brix.localdomain kernel:   Hygon HygonGenuine
+ноя 07 14:48:54 brix.localdomain kernel:   Centaur CentaurHauls
+ноя 07 14:48:54 brix.localdomain kernel:   zhaoxin   Shanghai  
+ноя 07 14:48:54 brix.localdomain kernel: x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'
+ноя 07 14:48:54 brix.localdomain kernel: x86/fpu: Supporting XSAVE feature 0x002: 'SSE registers'
+ноя 07 14:48:54 brix.localdomain kernel: x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'
+ноя 07 14:48:54 brix.localdomain kernel: x86/fpu: xstate_offset[2]:  576, xstate_sizes[2]:  256
+ноя 07 14:48:54 brix.localdomain kernel: x86/fpu: Enabled xstate features 0x7, context size is 832 bytes, using 'standard' format.
+ноя 07 14:48:54 brix.localdomain kernel: BIOS-provided physical RAM map:
+ноя 07 14:48:54 brix.localdomain kernel: BIOS-e820: [mem 0x0000000000000000-0x000000000009d7ff] usable
+ноя 07 14:48:54 brix.localdomain kernel: BIOS-e820: [mem 0x000000000009d800-0x000000000009ffff] reserved
+...
+```
+
+Как видим, 6 ноября ни одной записи не было, т.е. компьютер реально ни кем не включался.
+
+
+Подробный вывод сообщений:
+
+	journalctl -o verbose
+
+Можно фильтровать по критериям.
+Пример, фильтации сообщений от процесса DHCP клиента:
+
+```
+$ pgrep -l dhc
+1367 dhclient
+```
+
+здась 1367 - это номер процесса в ОС.
+смотрим сквозь фильтр:
+
+```
+
+$ journalctl \_PID=1367
+...
+ноя 08 21:06:19 brix.localdomain gsd-color[1367]: could not find device: property match 'XRANDR_name'='HDMI-1' does not exist
+ноя 08 21:06:58 brix.localdomain gsd-color[1367]: failed to set screen _ICC_PROFILE: Не удалось открыть файл «/home/dron/.local/sha
+ноя 08 21:07:00 brix.localdomain gsd-color[1367]: failed to set screen _ICC_PROFILE: Не удалось открыть файл «/home/dron/.local/sha
+ноя 08 23:26:35 brix.localdomain gsd-color[1367]: failed to connect to device: Failed to connect to missing device /org/freedesktop
+ноя 08 23:26:35 brix.localdomain gsd-color[1367]: gsd-color: Fatal IO error 11 (Ресурс временно недоступен) on X server :1024.
+-- Reboot --
+ноя 10 17:50:27 brix.localdomain dhclient[1367]: DHCPREQUEST of 192.168.3.174 on enp2s0 to 255.255.255.255 port 67 (xid=0x1dc36ea8)
+ноя 10 17:50:27 brix.localdomain dhclient[1367]: DHCPACK of 192.168.3.174 from 192.168.3.1
+ноя 10 17:50:27 brix.localdomain dhclient[1367]: bound to 192.168.3.174 -- renewal in 37822 seconds.
+
+
+```
+
+Сегодня 10 ноября под номером 1367 значится процесс dhclient , а позавчера gsd-color.
+
+Пример просмотра сообщений от пользователя ОС с UID равным 1000:
+
+```
+$ journalctl \_UID=1000
+-- Logs begin at Tue 2021-03-16 11:27:43 MSK, end at Wed 2021-11-10 18:55:01 MSK. --
+мар 16 11:27:57 brix systemd[1557]: Listening on GnuPG cryptographic agent and passphrase cache (access for web browsers).
+мар 16 11:27:57 brix systemd[1557]: Starting D-Bus User Message Bus Socket.
+мар 16 11:27:57 brix systemd[1557]: Started Pending report trigger for Ubuntu Report.
+мар 16 11:27:57 brix systemd[1557]: Listening on GnuPG network certificate management daemon.
+мар 16 11:27:57 brix systemd[1557]: Listening on GnuPG cryptographic agent (ssh-agent emulation).
+мар 16 11:27:57 brix systemd[1557]: Reached target Paths.
+мар 16 11:27:57 brix systemd[1557]: Reached target Timers.
+мар 16 11:27:57 brix systemd[1557]: Listening on GnuPG cryptographic agent and passphrase cache (restricted).
+мар 16 11:27:57 brix systemd[1557]: Listening on GnuPG cryptographic agent and passphrase cache.
+мар 16 11:27:57 brix systemd[1557]: Listening on REST API socket for snapd user session agent.
+мар 16 11:27:57 brix systemd[1557]: Listening on D-Bus User Message Bus Socket.
+...
+```
+
+Пример выбора записей активности сервиса времени с 9 утра:
+
+```
+$ journalctl --since 9:00:00 \_SYSTEMD\_UNIT="systemd-timesyncd.service"
+-- Logs begin at Tue 2021-03-16 11:27:43 MSK, end at Wed 2021-11-10 19:05:01 MSK. --
+ноя 10 17:50:53 brix.localdomain systemd-timesyncd[699]: Synchronized to time server 91.189.89.198:123 (ntp.ubuntu.com).
+```
+
+Просмотр активности сервиса cron с начала сегодняшнего дня:
+
+```
+$ journalctl -u cron.service --since today
+-- Logs begin at Tue 2021-03-16 11:27:43 MSK, end at Wed 2021-11-10 19:25:01 MSK. --
+ноя 10 17:50:23 brix.localdomain systemd[1]: Started Regular background program processing daemon.
+ноя 10 17:50:23 brix.localdomain cron[916]: (CRON) INFO (pidfile fd = 3)
+ноя 10 17:50:23 brix.localdomain cron[916]: (CRON) INFO (Running @reboot jobs)
+ноя 10 17:55:01 brix.localdomain CRON[5574]: pam_unix(cron:session): session opened for user root by (uid=0)
+ноя 10 17:55:01 brix.localdomain CRON[5575]: (root) CMD (command -v debian-sa1 > /dev/null && debian-sa1 1 1)
+ноя 10 17:55:01 brix.localdomain CRON[5574]: pam_unix(cron:session): session closed for user root
+ноя 10 18:05:01 brix.localdomain CRON[6124]: pam_unix(cron:session): session opened for user root by (uid=0)
+ноя 10 18:05:01 brix.localdomain CRON[6125]: (root) CMD (command -v debian-sa1 > /dev/null && debian-sa1 1 1)
+ноя 10 18:05:01 brix.localdomain CRON[6124]: pam_unix(cron:session): session closed for user root
+...
+```
 
 
 ## Библиотеки журналирования приложений
@@ -192,7 +382,6 @@ syslog1: Program started
 В файле `/var/log/syslog` появляется запись:
 
 	Nov  7 21:37:47 brix syslog1: Program started
-
 
 
 

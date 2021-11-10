@@ -90,15 +90,61 @@ $ systemctl status rsyslog.service
 * какие скрипты запускать после ротации логов
 
 
-
-
 ### syslogng
 
 В качестве альтернативы стандартному syslog или rsyslog может быть поставлен
 [syslog-ng](https://en.wikipedia.org/wiki/Syslog-ng).
+У него много плагинов и преобразователей данных в разные форматы для мониторинга в реальном времени.
 
 
 ###  Подсистема systemd и средство journalctl
+
+В отличае от классических текстовых журнальных файлов (логов)
+журналы [systemd](https://ru.wikipedia.org/wiki/Systemd) представляют из себя
+систему записей в двоичном структурированном формате.
+Располагаются они каталоге `/var/log/journal`.
+Для их ротации и автоматической очистки не требуется отдельное внешнее ПО.
+Файлы журнала удобно фильтровать по заданным критериям (см. далее).
+Централизованный сервис ведения журналов
+[journald](https://www.freedesktop.org/software/systemd/man/systemd-journald.service.html)
+может предоставлять данные в формате JSON.
+
+Просмотр сообщений с приоритетом серьёзности (важности) наперёд заданной или больше
+(в данном случае критической - crit):
+
+```
+journalctl -p crit
+...
+ноя 03 17:57:27 c003m1cpc512 postfix/sendmail[12179]: fatal: open /etc/postfix/main.cf: No such file or directory
+ноя 03 19:55:51 c003m1cpc512 gnome-session-binary[1546]: CRITICAL: We failed, but the fail whale is dead. Sorry....
+-- Reboot --
+ноя 08 19:15:17 c003m1cpc512 gnome-session-binary[2115]: CRITICAL: We failed, but the fail whale is dead. Sorry....
+-- Reboot --
+ноя 09 19:02:30 c003m1cpc512 gnome-session-binary[1926]: CRITICAL: We failed, but the fail whale is dead. Sorry....
+```
+
+Мониторинг за вновь поступающими сообщениями важности от info:
+
+```
+$ journalctl -n0 -p info -f
+-- Logs begin at Tue 2021-03-30 10:00:25 MSK. --
+ноя 10 15:58:49 c003m1cpc512 sudo[30719]:     dron : TTY=pts/1 ; PWD=/home/dron ; USER=root ; COMMAND=/usr/bin/apt update
+ноя 10 15:58:49 c003m1cpc512 sudo[30719]: pam_unix(sudo:session): session opened for user root by (uid=0)
+ноя 10 15:58:59 c003m1cpc512 sudo[30719]: pam_unix(sudo:session): session closed for user root
+ноя 10 15:59:00 c003m1cpc512 sudo[31102]:     dron : TTY=pts/1 ; PWD=/home/dron ; USER=root ; COMMAND=/usr/bin/apt full-upgrade
+ноя 10 15:59:00 c003m1cpc512 sudo[31102]: pam_unix(sudo:session): session opened for user root by (uid=0)
+ноя 10 15:59:00 c003m1cpc512 dbus-daemon[906]: [system] Activating via systemd: service name='org.freedesktop.fwupd' unit='fwupd.service' requested by ':1.124' (uid=2767 pid=3493 comm="/usr/bin/gnome-software --gapplication-service " label="unconfined")
+ноя 10 15:59:00 c003m1cpc512 gnome-software[3493]: Only 0 apps for recent list, hiding
+ноя 10 15:59:00 c003m1cpc512 systemd[1]: Starting Firmware update daemon...
+ноя 10 15:59:00 c003m1cpc512 fwupd[31115]: 12:59:00:0384 FuPluginUefi         kernel efivars support missing: /sys/firmware/efi/efivars
+ноя 10 15:59:00 c003m1cpc512 dbus-daemon[906]: [system] Successfully activated service 'org.freedesktop.fwupd'
+ноя 10 15:59:00 c003m1cpc512 systemd[1]: Started Firmware update daemon.
+
+```
+
+[Конфигурация journald](https://www.freedesktop.org/software/systemd/man/journald.conf.html)
+находится в файле `/etc/systemd/journald.conf`.
+
 
 
 ## Библиотеки журналирования приложений
@@ -199,5 +245,7 @@ syslog1: Program started
 ## Источники информации
 
 * [Файл регистрации](https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB_%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D0%B8)
+* [Использование journalctl для просмотра и анализа логов: подробный гайд](https://habr.com/ru/company/ruvds/blog/533918/)
+* [Journal File Format](https://www.freedesktop.org/wiki/Software/systemd/journal-files/)
 
 

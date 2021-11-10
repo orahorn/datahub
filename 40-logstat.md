@@ -295,7 +295,7 @@ $ journalctl \_PID=1367
 Пример просмотра сообщений от пользователя ОС с UID равным 1000:
 
 ```
-$ journalctl \_UID=1000
+$ journalctl _UID=1000
 -- Logs begin at Tue 2021-03-16 11:27:43 MSK, end at Wed 2021-11-10 18:55:01 MSK. --
 мар 16 11:27:57 brix systemd[1557]: Listening on GnuPG cryptographic agent and passphrase cache (access for web browsers).
 мар 16 11:27:57 brix systemd[1557]: Starting D-Bus User Message Bus Socket.
@@ -314,7 +314,7 @@ $ journalctl \_UID=1000
 Пример выбора записей активности сервиса времени с 9 утра:
 
 ```
-$ journalctl --since 9:00:00 \_SYSTEMD\_UNIT="systemd-timesyncd.service"
+$ journalctl --since 9:00:00 _SYSTEMD_UNIT="systemd-timesyncd.service"
 -- Logs begin at Tue 2021-03-16 11:27:43 MSK, end at Wed 2021-11-10 19:05:01 MSK. --
 ноя 10 17:50:53 brix.localdomain systemd-timesyncd[699]: Synchronized to time server 91.189.89.198:123 (ntp.ubuntu.com).
 ```

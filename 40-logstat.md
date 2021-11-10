@@ -486,5 +486,5 @@ $ pkg-config --cflags --libs libsystemd
 * [Файл регистрации](https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB_%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D0%B8)
 * [Использование journalctl для просмотра и анализа логов: подробный гайд](https://habr.com/ru/company/ruvds/blog/533918/)
 * [Journal File Format](https://www.freedesktop.org/wiki/Software/systemd/journal-files/)
-
+* [sd-journal](https://www.freedesktop.org/software/systemd/man/sd-journal.html)
 

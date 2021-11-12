@@ -437,13 +437,45 @@ $ pkg-config --cflags --libs libsystemd
 
 ## Анализаторы логов
 
-### Статистика по логам
+[Анализаторы журналов](https://ru.wikipedia.org/wiki/%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%82%D0%BE%D1%80_%D0%B6%D1%83%D1%80%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2)
+работают по-принципу сбора и хранения промежуточных данных из записей системных или прикладных программ в базу
+и дальнейшей агрегации этих данных в некоторые статистические показатели.
+Например, это могут быть данные о нагрузках на потребление конкретных информационных ресурасов по
+[URL](https://ru.wikipedia.org/wiki/URL)
+( адресам, количество ошибок при обращении к тем или иным объектам, сбоев и т.д.).
+Среди анализатора логов прикладных программ хотелось бы выделить Webalizer, который просматривает
+логи веб сервера (например, такого как [Apache HTTPd](https://httpd.apache.org/),
+[NGINX](https://ru.wikipedia.org/wiki/Nginx),...) и выдаёт их в красивой графической и табличной форме.
+Основным показателям в них является [посещаемость сайтов](https://ru.wikipedia.org/wiki/%D0%A1%D1%87%D1%91%D1%82%D1%87%D0%B8%D0%BA_%D0%BF%D0%BE%D1%81%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B9) и ошибки.
+
+Также Webalizer производит метаотчёты по [GeoIP](https://en.wikipedia.org/wiki/Internet_geolocation): статистике географии 
+запросов Web-адресов. 
+
+Стоит отметить, что формат подобных журналов называется 
+[Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format) .
+Также подобные логи может не только анализировать , но и специальным образом обрабатывать средство logtools
+
+[Расширенный формат логов](https://www.w3.org/TR/WD-logfile.html) - специфицирует организация W3C.
+
+Есть также анализаторы системных журналов.
 
 ### logtool
+
+[logtool](https://packages.debian.org/sid/utils/logtool) - хороший инструмент для анализа системных
+журналов (syslog). Это набор утилит коммандной строки.
+
+Установка в Debian/Ubuntu основанных дистрибутивах:
+
+	sudo apt install logtool
+
+Простейший пример просмотра журнала
+
+	logtool < /var/log/syslog
 
 ## системы ведения статистики
 
 ### sysstat, sar, ksar
+
 
 
 ## Прикладные сервисы журналирования проекта Apache
@@ -458,8 +490,6 @@ $ pkg-config --cflags --libs libsystemd
 ### Java
 
 Всё началось  с программного обеспечения (ПО) [log4j](https://logging.apache.org/log4j/) для языка проагрммирования Java.
-
-
 
 
 ### C++
@@ -487,4 +517,4 @@ $ pkg-config --cflags --libs libsystemd
 * [Использование journalctl для просмотра и анализа логов: подробный гайд](https://habr.com/ru/company/ruvds/blog/533918/)
 * [Journal File Format](https://www.freedesktop.org/wiki/Software/systemd/journal-files/)
 * [sd-journal](https://www.freedesktop.org/software/systemd/man/sd-journal.html)
-
+* [Аудиторский след](https://ru.wikipedia.org/wiki/%D0%90%D1%83%D0%B4%D0%B8%D1%82%D0%BE%D1%80%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%BB%D0%B5%D0%B4)

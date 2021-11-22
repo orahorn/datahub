@@ -274,5 +274,35 @@ _Замечания_:
 * Можно использовать компиляторы и интерпретаторы других языков, например C++ или Perl.
 * В POSIX несовместимых системах, таких, как Windows, например, рекомендуется поставить ПО реализующее т.н. обёртки, вроде [Subsystem for UNIX-based Applications](https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%B4%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_%D0%B4%D0%BB%D1%8F_%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9_%D0%BD%D0%B0_%D0%B1%D0%B0%D0%B7%D0%B5_UNIX) (SUA).
 
+## 08. Роль баз данных в ИУС
+
+[Лекция](30-databases.md)
+
+### 08.01. Oracle Berkeley Database
+
+_Исходные данные_:
+
+* Комплект ПО [Berkeley DB](https://ru.wikipedia.org/wiki/Berkeley_DB) с библиотеками и утилитами
+* Интерпретаторы языков программирования:
+	- [Python](https://ru.wikipedia.org/wiki/Python)
+	- [Perl](https://ru.wikipedia.org/wiki/Perl)
+
+_Задание_:
+
+* создать текстовый файл в формате чередующихся строк ключ1, значение1, ключ2, значение2,...
+* импортировать утилитой `db_load` этот текстовый файл в формат БД Berkeley
+* утилитой `db_dump` проанализировать получившийся файл
+* На Python написать простейший скрипт для прочтения этого файла, используя модуль [bsddb3](https://pypi.org/project/bsddb3/)
+* С использованием Perl разработать скрипт, который с помощью [DB_File](https://perldoc.perl.org/DB_File) читает тот же DBM файл в хеш и распечатывает его на экране
+
+### 08.02. GNU Database Manager
+
+_Исходные данные_:
+
+* ПО [GDBM](https://www.gnu.org.ua/software/gdbm/)
+* Компилятор языка C
+
+_Задание_
+
 
 

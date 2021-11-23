@@ -362,3 +362,39 @@ _Задание_:
 * Заполнить узлы данными
 
 
+## 09. Журналирование событий и ведение статистики работы ИУС
+
+[Лекция](40-logstat.md) 
+
+## 09.01. POSIX Syslog API
+
+_Исходные данные_:
+
+* [POSIX](https://ru.wikipedia.org/wiki/POSIX)-совместимая система, например, [Unix](https://ru.wikipedia.org/wiki/Unix)
+* компилятор языка [C](https://ru.wikipedia.org/wiki/%D0%A1%D0%B8_(%D1%8F%D0%B7%D1%8B%D0%BA_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))
+
+
+_Задание_:
+
+* Включить мониторинг файла событий [syslog](https://ru.wikipedia.org/wiki/Syslog) утилитой [tail](https://ru.wikipedia.org/wiki/Tail)
+* Утилитой [logger](https://ru.wikipedia.org/wiki/Logger) послать сообщение и убедиться, что tail его отобразил
+* Дополнительно: включить в настройках передачу сообщения на другой компьютер в сети.
+	- проверить утилитой [tcpdump](https://ru.wikipedia.org/wiki/Tcpdump) на [порту](https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D1%80%D1%82_(%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D0%BD%D1%8B%D0%B5_%D1%81%D0%B5%D1%82%D0%B8)) 514
+* разработать программу на C, которая посылает syslog-сообщение. Убедиться, что оно также достигает назначения.
+
+
+### 09.02.  SystemD Journal
+
+_Исходные данные_:
+
+См. выше.
+
+_Задание_:
+
+* В утилите [journalctl](https://www.freedesktop.org/software/systemd/man/journalctl.html) отфильтровать сообщения с помощью выражений:
+	- критические
+	- непрерывно выводящиеся информационные
+	- со вчерашнего дня
+* С помощью [SystemD Journal API](https://www.freedesktop.org/software/systemd/man/sd-journal.html) напечатать в журнал сообщение и прочесть его утилитой journalctl.
+
+

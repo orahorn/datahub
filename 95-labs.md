@@ -380,7 +380,9 @@ _Задание_:
 * Утилитой [logger](https://ru.wikipedia.org/wiki/Logger) послать сообщение и убедиться, что tail его отобразил
 * Дополнительно: включить в настройках передачу сообщения на другой компьютер в сети.
 	- проверить утилитой [tcpdump](https://ru.wikipedia.org/wiki/Tcpdump) на [порту](https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D1%80%D1%82_(%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D0%BD%D1%8B%D0%B5_%D1%81%D0%B5%D1%82%D0%B8)) 514
-* разработать программу на C, которая посылает syslog-сообщение. Убедиться, что оно также достигает назначения.
+* Разработать программу на C, которая посылает syslog-сообщение. Убедиться, что оно также достигает назначения.
+* У кого MS Windows: посмотреть журналы с помощью утилиты [Просмотр событий](https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80_%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D0%B9)
+	- Записать с помощью [Visual C++](https://docs.microsoft.com/ru-ru/troubleshoot/cpp/write-entry-to-event-log) сообщения в журнал Windows.
 
 
 ### 09.02.  SystemD Journal
@@ -397,4 +399,37 @@ _Задание_:
 	- со вчерашнего дня
 * С помощью [SystemD Journal API](https://www.freedesktop.org/software/systemd/man/sd-journal.html) напечатать в журнал сообщение и прочесть его утилитой journalctl.
 
+### 09.03. Статистика
 
+_Исходные данные_:
+
+Cм. выше.
+
+_Задания_:
+
+* С помощью пакета [Sysstat](https://en.wikipedia.org/wiki/Sysstat) посмотреть статистику:
+	- CPU, памяти , прерываний и др. в утилите [sar](https://en.wikipedia.org/wiki/Sar_(Unix))
+	- ввод-вывод в утилите [iostat](https://en.wikipedia.org/wiki/Iostat)
+* В утилите [kSar](https://en.wikipedia.org/wiki/Ksar_(Unix_sar_grapher)) -посмотреть статистику  в графическом виде
+* Познакомиться с утилитой [vmstat](https://en.wikipedia.org/wiki/Vmstat)
+* У кого MS Windows посмотреть статистику в своей системы с помощью:
+	- [Диспетчера задач Windows](https://ru.wikipedia.org/wiki/%D0%94%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80_%D0%B7%D0%B0%D0%B4%D0%B0%D1%87_Windows)
+	- [System Explorer](https://ru.wikipedia.org/wiki/System_Explorer)
+
+### 09.04. Проект Apache Logging
+
+_Исходные данные_:
+
+* [JDK](https://ru.wikipedia.org/wiki/Java_Development_Kit)
+* Библиотека [Log4J](https://ru.wikipedia.org/wiki/Log4j) не только для Java, но и для:
+	- C++
+	- [Perl](https://metacpan.org/pod/Log::Log4perl)
+	- [Python](https://pypi.org/project/log4python/)
+	- И другие
+
+
+_Задание_:
+
+* Разобраться с концепцией журналирования проекта Apache по [руководству пользователя](https://logging.apache.org/log4j/2.x/log4j-users-guide.pdf)
+* Составить конфигурационный файл для приложения
+* Разработать скрипт или программу, проверить генерацию файла с журналом сообщений

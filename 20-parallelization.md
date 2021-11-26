@@ -208,6 +208,25 @@ Hello, world, I am 2 of 5, (Open MPI v2.1.1, package: Open MPI buildd@lcy01-amd6
 
 ## OpenACC
 
+## Концепция неблокирующего, ассинхронно/ожидающего программирования
+
+Само понятие [Async/await](https://en.wikipedia.org/wiki/Async/await) программирования появилась, когда
+классические Unix-API ядра с семафорами и языком Си вызвали потребность реализовать
+накопленное в синтаксисе уже других более современны языков программирования:
+C#, C++, Python, F#, Julia, Kotlin, Rust, JavaScript, Scala и Swift.
+
+Есть классическая библиотека [libaio](https://pagure.io/libaio) для поддержки асинхронного ввода-вываода на 
+Linux.
+
+Установка на Debian/Ubuntu ориентированных дистрибутивах:
+
+```
+sudo apt install libaio-dev
+sudo apt install python3-async
+sudo apt install node-async
+sudo apt install nlibfuture-asyncawait-perl
+```
+
 
 ## Источники
 

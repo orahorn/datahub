@@ -242,18 +242,18 @@ API Win32 практически не отделима от графическо
 
 Другие промышленные библиотеки кроссплатформенной разработки ГПИ:
 
-* Qt - самая востребованная на госпредприятиях библиотека в России и ряде стран Северной Европе
-* wxWidgets - библиотека C++ с использованием классических макросов Си. Имеет ряд привязок
-* tk - библиотека придуманная в языке TCL, но ставшая базовой комплектной даже для Python3.
-* gtk - чисто Сишная библиотека используется, как базовая для остальных
-* Enlightenment Foundation Libraries (EFL) - изящно-артистичная и лёгкая одновременно библиотека с разными анимационными и звуковыми эффектами
-* SFML - популярная современная библиотека в индустрии разработки игр
-* JUCE - C++ библиотека
+* [Qt](https://ru.wikipedia.org/wiki/Qt) - самая востребованная на госпредприятиях библиотека в России и ряде стран Северной Европе
+* [wxWidgets](https://ru.wikipedia.org/wiki/WxWidgets) - библиотека C++ с использованием классических макросов Си. Имеет ряд привязок
+* [Tk](https://ru.wikipedia.org/wiki/Tk) - библиотека придуманная в языке TCL, но ставшая базовой комплектной даже для Python3.
+* [GTK](https://ru.wikipedia.org/wiki/GTK) - чисто Сишная библиотека используется, как базовая для остальных
+* [Enlightenment Foundation Libraries (EFL)](https://ru.wikipedia.org/wiki/Enlightenment) - изящно-артистичная и лёгкая одновременно библиотека с разными анимационными и звуковыми эффектами. Только для [X Window System](https://ru.wikipedia.org/wiki/X_Window_System).
+* [SFML](https://ru.wikipedia.org/wiki/SFML) - популярная современная библиотека в индустрии разработки игр
+* [JUCE](https://ru.wikipedia.org/wiki/Juce) - C++ библиотека - разработка не только GUI, но и плагинов
 * старые библиотеки для игр и мультимедия:
-	- SDL 
-	- Allegro
-* FOX-tools - библиотека GUI с использование OpenGL и инфографики
-* XForms - переносимая библиотека в стиле X-Window расширений
+	- [SDL](https://ru.wikipedia.org/wiki/Simple_DirectMedia_Layer)
+	- [Allegro](https://ru.wikipedia.org/wiki/Allegro_(%D0%BC%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BC%D0%B5%D0%B4%D0%B8%D0%B9%D0%BD%D0%B0%D1%8F_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0))
+* [FOX-tools](https://ru.wikipedia.org/wiki/FOX_toolkit) - библиотека GUI с использование OpenGL и инфографики
+* [XForms Toolkit](https://en.wikipedia.org/wiki/XForms_(toolkit)) - переносимая библиотека в стиле X-Window расширений
 
 На других языках программирования реализован свой GUI.
 Например Java использует универсальное API для создания форм.

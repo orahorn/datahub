@@ -211,11 +211,11 @@ API Win32 практически не отделима от графическо
 * ползунки
 * поля для ввода данных с клавиатуры и их редактирования
 * объекты для растровой отрисовки изображений, интегрируемые с библиотеками:
-	- Cairo
-	- OpenGL
+	- [Cairo](https://ru.wikipedia.org/wiki/Cairo)
+	- [OpenGL](https://ru.wikipedia.org/wiki/OpenGL)
 	- изображений файлов:
-		+ PNG
-		+ JPG
+		+ [PNG](https://ru.wikipedia.org/wiki/PNG)
+		+ [JPEG](https://ru.wikipedia.org/wiki/JPEG)
 
 Список интегрируемых подключаемых библиотек можно посмотреть командой:
 
@@ -234,9 +234,9 @@ API Win32 практически не отделима от графическо
 Это немного конфузило пользователей, привыкших к однообразию отображения виджетов.
 Сейчас идёт тенденция на замену этого кода на вызовы функций графики из конкретной ОС:
 
-* macOS (Aqua)
+* [macOS](https://ru.wikipedia.org/wiki/MacOS) ([Aqua](https://ru.wikipedia.org/wiki/Aqua_(%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81)))
 * X-Window (вплоть до версии 1.3), Wayland (с 1.4 версии Linux) : <https://www.fltk.org/str.php?L3371>
-* Win32 API
+* [Win32 API](https://ru.wikipedia.org/wiki/Windows_API)
 
 Пример: класс открытия файлов [Fl_Native_File_Chooser](https://www.fltk.org/doc-1.3/classFl__Native__File__Chooser.html).
 

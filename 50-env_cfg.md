@@ -109,6 +109,9 @@
 [libinih-dev](https://github.com/benhoyt/inih) Ubuntu Linux.
 Также есть сборки [пакетов Visual C](https://en.wikipedia.org/wiki/Vcpkg).
 
+Ещё похожие библиотеки есть  в пакетах [libiniparser-dev](https://github.com/ndevilla/iniparser) и
+[libini-config-dev](https://github.com/SSSD/ding-libs).
+
 Формат текста конфигурационного файла может быть таковым, ещё более сложным, что требуется его
 разметка (Markup). И тут используют широкоизвестный стандарт XML.
 

@@ -27,6 +27,15 @@
 
 ## Cygwin
 
+## MinGW
+
+Минималистичная среда GNU для разарботки в Windows (MinGW)
+например интегрирована в редактор-интегрированную среду Code::Blocks.
+
+Есть инсталляционный исполняемый файл доступный для
+[загрузки со страницы проекта](https://www.codeblocks.org/downloads/binaries/).
+
+
 ## PTSource Developer Platform
 
 https://ptsource.github.io/Developer-Platform/

@@ -35,6 +35,8 @@
 Есть инсталляционный исполняемый файл доступный для
 [загрузки со страницы проекта](https://www.codeblocks.org/downloads/binaries/).
 
+Есть [инструкция от активного разработчика из проекта FLTK](https://www.fltk.org/articles.php?L1820)
+по установке Code::Blocks с его GUI-билиотекой.
 
 ## PTSource Developer Platform
 
@@ -49,13 +51,12 @@ https://ptsource.github.io/Developer-Platform/
 [Windows Subsystem for Linux](https://ru.wikipedia.org/wiki/Windows_Subsystem_for_Linux)
 
 
-
-
-
 ## Источники
 
 * [Кроссплатформенность](https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%BE%D1%81%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C)
 * [Учебник. Создание кроссплатформенных проектов C++ в Visual Studio](https://docs.microsoft.com/ru-ru/cpp/build/get-started-linux-cmake?view=msvc-160&viewFallbackFrom=vs-2019) ; Дата: 12.08.2021 ; Чтение занимает 4 мин
 * Кое-что по Javascript: [Фреймворки и библиотеки для кроссплатформенной разработки десктопных програм](https://habr.com/ru/post/528614/) ; автор: [DanFleishman](https://habr.com/ru/users/DanFleishman/) ; Дата/время: 17 ноября 2020 в 22:25
 * Разработка на Free Pascal : [Multiplatform Programming Guide/ru](https://wiki.lazarus.freepascal.org/Multiplatform_Programming_Guide/ru)
- 
+* [Article #1820: Installation CodeBlocks with FLTK on Windows 2021-12-01](https://www.fltk.org/articles.php?L1820)
+
+
